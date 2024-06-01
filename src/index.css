@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.react-tel-input .form-control {
+  background: transparent;
+  border: none;
+  height: 45px;
+  width: calc(100% - 40px); /* Adjusting width to fit the container */
+  padding-left: 50px; /* Ensuring enough space for the country code */
+  font-family: newsreader;
+  font-size: 20px;
+  color: #131519;
+  box-shadow: none; /* Remove default box-shadow */
+}
+
+.react-tel-input .flag-dropdown {
+  border: none;
+  background: transparent;
+}
+
+.react-tel-input .country-list {
+  border: 1px solid #304D7A;
+  border-radius: 5px;
+}
