@@ -1,8 +1,14 @@
-import Hero1 from "./Hero";
-const About = () => {
+import Hero from "./Hero";
+const About = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
   return (
     <>
-      <Hero1 text="About Us" />
+      <Hero
+        text="About Us"
+        loginStatus={loginStatus}
+        setLoginStatus={setLoginStatus}
+        showLogout={showLogout}
+        setShowLogout={setShowLogout}
+      />
     </>
   );
 };

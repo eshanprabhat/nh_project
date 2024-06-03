@@ -1,9 +1,15 @@
 import Hero from "./Hero";
 
-const Home = () => {
+const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
   return (
     <>
-      <Hero text="Health Insurance" />
+      <Hero
+        text="Health Insurance"
+        loginStatus={loginStatus}
+        setLoginStatus={setLoginStatus}
+        showLogout={showLogout}
+        setShowLogout={setShowLogout}
+      />
     </>
   );
 };

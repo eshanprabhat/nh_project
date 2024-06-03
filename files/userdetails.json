@@ -1,0 +1,14 @@
+[
+  {
+    "id": "0",
+    "name": "Jonas Schmedtmann",
+    "mobileNumber": "9234567890",
+    "email": "admin@natours.io"
+  },
+  {
+    "id": "1",
+    "name": "Eshan Prabhat",
+    "mobileNumber": "6200318516",
+    "email": "eshanprabhat22@gmail.com"
+  }
+]

@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import OtpInput from "otp-input-react";
 import "react-phone-input-2/lib/style.css";
-import { auth } from "../firebase"; // Import the initialized auth
-import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
+import { auth } from "../firebase";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOTP] = useState("");
-  const [showOTP, setShowOTP] = useState(true);
-  // const [confirmationResult, setConfirmationResult] = useState(null);
+  const [showOTP, setShowOTP] = useState(false);
+  const [confirmationResult, setConfirmationResult] = useState(null);
 
   const handleInputChange = (value) => {
     setPhoneNumber(value);
@@ -23,26 +23,37 @@ const Login = () => {
 
   const setupRecaptcha = () => {
     if (!window.recaptchaVerifier) {
+      // const auth = getAuth();
       window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
         size: "invisible",
         callback: (response) => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           onSignInSubmit();
-          console.log("Captcha Verified!!");
+          console.log("Captcha Verified!");
         },
       });
     }
   };
+
   const onSignInSubmit = () => {
-    const appVerifier = window.recaptchaVerifier;
     const formattedPhoneNumber = `+${phoneNumber}`;
+    console.log(`Formatted Phone Number: ${formattedPhoneNumber}`);
+    const appVerifier = window.recaptchaVerifier;
+
+    // const auth = getAuth();
     signInWithPhoneNumber(auth, formattedPhoneNumber, appVerifier)
       .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        console.log("OTP has been sent");
+        setConfirmationResult(confirmationResult);
+        console.log("SMS sent Successfully!!");
+        // ...
       })
       .catch((error) => {
-        console.log("SMS not sent", error);
+        console.log("SMS Not sent", error);
+        // Error; SMS not sent
+        // ...
       });
   };
 
@@ -50,7 +61,7 @@ const Login = () => {
     e.preventDefault();
     console.log(`+${phoneNumber}`);
     setupRecaptcha();
-    setShowOTP(false);
+    setShowOTP(true);
     onSignInSubmit();
   };
 
@@ -58,57 +69,28 @@ const Login = () => {
     setOTP(value);
   };
 
-  // const handleOtpSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (confirmationResult) {
-  //     confirmationResult
-  //       .confirm(otp)
-  //       .then((result) => {
-  //         const user = result.user;
-  //         console.log("User signed in successfully:", user);
-  //       })
-  //       .catch((error) => {
-  //         console.log("OTP verification failed", error);
-  //       });
-  //   }
-  // };
+  const handleOtpSubmit = (e) => {
+    e.preventDefault();
+    if (confirmationResult) {
+      confirmationResult
+        .confirm(otp)
+        .then((result) => {
+          const user = result.user;
+          console.log("User signed in successfully:", user);
+        })
+        .catch((error) => {
+          console.log("OTP verification failed", error);
+        });
+    }
+  };
 
   return (
     <div className="page">
       <div className="first">
         <div className="login-details">
           <img className="filtered" src={logo} alt="logo" />
+          <div id="sign-in-button"></div>
           {showOTP ? (
-            <>
-              <div className="text-1">Log-in using your Mobile Number</div>
-              <div id="sign-in-button"></div>
-              <PhoneInput
-                country={"in"}
-                value={phoneNumber}
-                onChange={handleInputChange}
-                // containerClass="input"
-                inputClass="form-control"
-                buttonClass="flag-dropdown"
-                dropdownClass="country-list"
-              />
-              <div style={{ padding: "20px" }}></div>
-              <button
-                type="button"
-                className="ebtn"
-                onClick={handleButtonClick}
-              >
-                Send OTP
-              </button>
-              <div className="text-2">
-                Haven't Registered Yet?{" "}
-                <Link to="/signup">
-                  <b>
-                    <u>Sign Up</u>
-                  </b>
-                </Link>
-              </div>
-            </>
-          ) : (
             <>
               <div className="text-1">
                 Enter the OTP sent to your Mobile Number
@@ -130,13 +112,40 @@ const Login = () => {
                 containerStyle={{ justifyContent: "center" }}
               />
               <div style={{ padding: "20px" }}></div>
+              <button type="button" className="ebtn" onClick={handleOtpSubmit}>
+                Log In
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="text-1">Log-in using your Mobile Number</div>
+
+              <PhoneInput
+                country={"in"}
+                value={phoneNumber}
+                onChange={handleInputChange}
+                placeholder="Enter Mobile Number"
+                // containerClass="input"
+                inputClass="form-control"
+                buttonClass="flag-dropdown"
+                dropdownClass="country-list"
+              />
+              <div style={{ padding: "20px" }}></div>
               <button
                 type="button"
                 className="ebtn"
-                // onClick={handleOtpSubmit}
+                onClick={handleButtonClick}
               >
-                Log In
+                Send OTP
               </button>
+              <div className="text-2">
+                Haven't Registered Yet?{" "}
+                <Link to="/signup">
+                  <b>
+                    <u>Sign Up</u>
+                  </b>
+                </Link>
+              </div>
             </>
           )}
         </div>
