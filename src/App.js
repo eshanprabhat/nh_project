@@ -6,6 +6,11 @@ import Login from "./Components/Login";
 import { Routes, Route } from "react-router-dom";
 import { useState, React } from "react";
 import Account from "./Components/Account";
+import AccountDetails from "./Components/AccountInfo/AccountDetails";
+import AddPatient from "./Components/AccountInfo/AddPatient";
+import PatientList from "./Components/AccountInfo/PatientList";
+import PatientInfo from "./Components/AccountInfo/PatientInfo/PatientInfo";
+
 function App() {
   const [loginStatus, setLoginStatus] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
@@ -34,7 +39,10 @@ function App() {
             />
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={<Login setLoginStatus={setLoginStatus} />}
+        />
         <Route
           path="/signup"
           element={<Signup setLoginStatus={setLoginStatus} />}
@@ -43,6 +51,50 @@ function App() {
           path="/account-info"
           element={
             <Account
+              showLogout={showLogout}
+              setShowLogout={setShowLogout}
+              loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+            />
+          }
+        />
+        <Route
+          path="/account-details"
+          element={
+            <AccountDetails
+              showLogout={showLogout}
+              setShowLogout={setShowLogout}
+              loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+            />
+          }
+        />
+        <Route
+          path="/add-patient"
+          element={
+            <AddPatient
+              showLogout={showLogout}
+              setShowLogout={setShowLogout}
+              loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+            />
+          }
+        />
+        <Route
+          path="/patient-list"
+          element={
+            <PatientList
+              showLogout={showLogout}
+              setShowLogout={setShowLogout}
+              loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+            />
+          }
+        />
+        <Route
+          path="/patient-info"
+          element={
+            <PatientInfo
               showLogout={showLogout}
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}

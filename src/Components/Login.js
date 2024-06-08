@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import second from "./Images/Firefly Health Insurance 82230.jpg";
 import one from "./Images/Screenshot 2024-05-30 at 3.27.15 PM.png";
-import three from "./Images/Firefly Health Insurance 65632.jpg";
 import two from "./Images/download.png";
+import three from "./Images/Firefly Health Insurance 65632.jpg";
 import logo from "./Images/Narayana_Health_Logo.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import OtpInput from "otp-input-react";
 import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import users from "../files/userdetails.json";
 
-const Login = () => {
+const Login = ({ setLoginStatus }) => {
+  const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOTP] = useState("");
   const [showOTP, setShowOTP] = useState(false);
@@ -23,12 +25,11 @@ const Login = () => {
 
   const setupRecaptcha = () => {
     if (!window.recaptchaVerifier) {
-      // const auth = getAuth();
       window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
         size: "invisible",
         callback: (response) => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
-          onSignInSubmit();
+          // onSignInSubmit();
           console.log("Captcha Verified!");
         },
       });
@@ -56,18 +57,40 @@ const Login = () => {
         // ...
       });
   };
-
-  const handleButtonClick = (e) => {
+  const handlePhoneNumberVerification = (phoneNumber) => {
+    const user = users.find((el) => el.mobileNumber === phoneNumber);
+    return new Promise((resolve) => {
+      if (!user) {
+        console.log("User not Verified!");
+        alert("User Not Registered! Try a different number or Sign Up");
+        resolve(false); // Set allowSignIn to false and resolve promise
+      } else {
+        console.log("User Verified!");
+        resolve(true); // Set allowSignIn to true and resolve promise
+      }
+    });
+  };
+  const handleButtonClick = async (e) => {
     e.preventDefault();
-    console.log(`+${phoneNumber}`);
-    setupRecaptcha();
-    setShowOTP(true);
-    onSignInSubmit();
+    const formatted = `+${phoneNumber}`;
+    console.log(formatted);
+    const isVerified = await handlePhoneNumberVerification(formatted); // Wait for verification to complete
+    if (isVerified) {
+      setupRecaptcha();
+      setShowOTP(true);
+      onSignInSubmit();
+    }
   };
 
   const handleOtpChange = (value) => {
     setOTP(value);
   };
+  const getUser = (phoneNumber) => {
+    const user = users.find((el) => el.mobileNumber === phoneNumber);
+    return user;
+  };
+  const formatted = `+${phoneNumber}`;
+  const myUser = getUser(formatted);
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
@@ -77,13 +100,14 @@ const Login = () => {
         .then((result) => {
           const user = result.user;
           console.log("User signed in successfully:", user);
+          setLoginStatus(true);
+          navigate("/", { state: { myUser } });
         })
         .catch((error) => {
           console.log("OTP verification failed", error);
         });
     }
   };
-
   return (
     <div className="page">
       <div className="first">
@@ -119,13 +143,11 @@ const Login = () => {
           ) : (
             <>
               <div className="text-1">Log-in using your Mobile Number</div>
-
               <PhoneInput
                 country={"in"}
                 value={phoneNumber}
                 onChange={handleInputChange}
                 placeholder="Enter Mobile Number"
-                // containerClass="input"
                 inputClass="form-control"
                 buttonClass="flag-dropdown"
                 dropdownClass="country-list"

@@ -9,7 +9,6 @@ import PhoneInput from "react-phone-input-2";
 import OtpInput from "otp-input-react";
 import { auth } from "../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-
 import axios from "axios";
 
 const Signup = ({ setLoginStatus }) => {
@@ -32,12 +31,12 @@ const Signup = ({ setLoginStatus }) => {
     }
   };
 
-  const onSignInSubmit = () => {
+  const onSignInSubmit = async () => {
     const formattedmobileNumber = `+${mobileNumber}`;
     console.log(`Formatted Phone Number: ${formattedmobileNumber}`);
     const appVerifier = window.recaptchaVerifier;
 
-    signInWithPhoneNumber(auth, formattedmobileNumber, appVerifier)
+    await signInWithPhoneNumber(auth, formattedmobileNumber, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
         setConfirmationResult(confirmationResult);
@@ -70,32 +69,29 @@ const Signup = ({ setLoginStatus }) => {
     setOTP(value);
   };
 
-  const handleOtpSubmit = (e) => {
+  const handleOtpSubmit = async (e) => {
     e.preventDefault();
     if (confirmationResult) {
-      confirmationResult
-        .confirm(otp)
-        .then((result) => {
-          const user = result.user;
-          console.log("User signed in successfully", user);
-          setLoginStatus(true);
-          axios
-            .post("http://localhost:5000/api/signup", {
-              name,
-              mobileNumber,
-              email,
-            })
-            .then((response) => {
-              console.log(response.data);
-              alert("User signed up successfully");
-            });
-          navigate("/").catch((error) => {
-            console.error("There was an error signing up!", error);
-          });
-        })
-        .catch((error) => {
-          console.log("OTP verification failed", error);
+      try {
+        const result = await confirmationResult.confirm(otp);
+        const user = result.user;
+        console.log("User signed in successfully", user);
+        setLoginStatus(true);
+        const phoneNumber = mobileNumber;
+        const date = new Date();
+        const response = await axios.post("http://localhost:5000/api/users", {
+          name,
+          phoneNumber,
+          email,
+          date,
         });
+        const myUser = response.data;
+        navigate("/", { state: { myUser } });
+        alert("User signed up successfully");
+      } catch (error) {
+        console.error("OTP verification failed", error);
+        alert("Invalid OTP!");
+      }
     }
   };
 
@@ -156,7 +152,7 @@ const Signup = ({ setLoginStatus }) => {
               <input
                 className="input"
                 type="text"
-                placeholder="Email ID(Optional)"
+                placeholder="Email ID"
                 value={email}
                 onChange={handleInputChangeE}
               />
