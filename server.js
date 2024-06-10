@@ -18,8 +18,10 @@ const patientsFilePath = path.join(
   "files",
   "patientdetails.json"
 );
+const plansFilePath = path.join(__dirname, "src", "files", "plandetails.json");
 const users = JSON.parse(fs.readFileSync(usersFilePath));
 const patients = JSON.parse(fs.readFileSync(patientsFilePath));
+const plans = JSON.parse(fs.readFileSync(plansFilePath));
 
 app.get("/api/users", (req, res) => {
   res.status(200).json({
@@ -27,6 +29,15 @@ app.get("/api/users", (req, res) => {
     results: users.length,
     data: {
       users,
+    },
+  });
+});
+app.get("/api/plans", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    results: plans.length,
+    data: {
+      plans,
     },
   });
 });

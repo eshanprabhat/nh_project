@@ -1,0 +1,23 @@
+[
+    {
+        "plan_id": 1,
+        "plan_name": "Basic",
+        "price": 3000,
+        "description": "Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.",
+        "created_on": "15/08/2021"
+    },
+    {
+        "plan_id": 2,
+        "plan_name": "Standard",
+        "price": 5000,
+        "description": "Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.",
+        "created_on": "18/11/2022"
+    },
+    {
+        "plan_id": 3,
+        "plan_name": "Premium",
+        "price": 7000,
+        "description": "Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.",
+        "created_on": "19/01/2023"
+    }
+]

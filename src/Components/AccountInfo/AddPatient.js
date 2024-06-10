@@ -39,7 +39,7 @@ const AddPatient = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setActive(true); //Just to ignore warnings : Has to be removed later
+    setActive(false); //Just to ignore warnings : Has to be removed later
     const user_id = myUser.id;
     const name = patientName;
     const Reg_date = new Date();
@@ -56,7 +56,7 @@ const AddPatient = ({
     alert("New Patient Added");
     const patient = response.data;
     console.log(patient);
-    navigate("/account-info");
+    navigate("/account-info", { state: { myUser } });
   };
   return (
     <>

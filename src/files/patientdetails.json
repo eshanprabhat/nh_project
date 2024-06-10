@@ -48,5 +48,15 @@
     "dob": "13/07/1997",
     "address": "Jamshedpur",
     "Reg_date": "2024-06-06T12:29:04.321Z"
+  },
+  {
+    "patient_id": 6,
+    "user_id": 1,
+    "name": "Rohini",
+    "gender": "Female",
+    "email": "rohini@gmail.com",
+    "dob": "12/10/2006",
+    "address": "Ahmedabad",
+    "Reg_date": "2024-06-10T04:35:32.469Z"
   }
 ]
