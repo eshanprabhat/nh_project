@@ -20,7 +20,7 @@ const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
   let plansHtml = null;
   if (plans) {
     plansHtml = plans.map((plan, i) => {
-      return <PlanCard plan={plan} key={i} />;
+      return <PlanCard plan={plan} user={myUser} key={i} loginStatus={loginStatus}/>;
     });
   } else {
     plansHtml = <p>No results found</p>;

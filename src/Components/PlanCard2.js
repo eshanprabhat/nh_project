@@ -1,7 +1,7 @@
 import poster from "./Images/download2.png";
-import {useNavigate} from "react-router-dom";
-const PlanCard = ({ plan, user, loginStatus }) => {
-  const navigate=useNavigate();
+
+const PlanCard = ({ plan }) => {
+
 
   let featuresHTML = null;
   if(plan.features){
@@ -11,17 +11,9 @@ const PlanCard = ({ plan, user, loginStatus }) => {
   }else{
     featuresHTML="No Features found!!"
   }
-  const planClick = ()=>{
-    if(loginStatus){
-      navigate("/plan-info",{state:{plan,user}});
-    }else{
-      navigate("/login");
-    }
-  }
-
   return (
     <>
-      <div className="plan-card" onClick={planClick}>
+      <div className="plan-card2">
         <div>
           <img className="plan-poster" src={poster} alt="plan poster" />
           <div className="plan-title">{plan.plan_name}</div>

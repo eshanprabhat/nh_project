@@ -3,21 +3,28 @@
         "plan_id": 1,
         "plan_name": "Basic",
         "price": 3000,
-        "description": "Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.",
+        "tagline":"Essential Protection for Your Peace of Mind",
+        
+        "description": "Our Basic Plan offers essential health coverage at an affordable price, ensuring you and your family have access to necessary medical services. This plan is perfect for individuals or families who want comprehensive coverage without breaking the bank.",
+        "features":["Preventive Care", "Doctor Visits","Emergency Services","Prescription Drugs","Telehealth Services"],
         "created_on": "15/08/2021"
     },
     {
         "plan_id": 2,
         "plan_name": "Standard",
         "price": 5000,
-        "description": "Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.",
+        "tagline":"Balanced Coverage for Your Health Needs",
+        "description": "Our Standard Plan strikes the perfect balance between comprehensive coverage and cost-effectiveness. This plan is ideal for individuals and families seeking more extensive benefits and flexibility in their healthcare options.",
+        "features":["Comprehensive Preventive Care","Specialist Access","Hospitalization Coverage","Enhanced Prescription Coverage","Maternity and Newborn Care","Mental Health Services"],
         "created_on": "18/11/2022"
     },
     {
         "plan_id": 3,
         "plan_name": "Premium",
         "price": 7000,
-        "description": "Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.",
+        "tagline": "Ultimate Health Protection for You and Your Family",
+        "description": "Our Premium Plan offers top-tier health coverage with the most extensive benefits and services. This plan is ideal for individuals and families who prioritize their health and want the best possible care without compromise.",
+        "features":["Extensive Preventive Care","Specialist and Hospital Care","Worldwide Coverage","All-Inclusive Prescription Coverage","Advanced Maternity and Newborn Care","Holistic Health Services","VIP Support"],
         "created_on": "19/01/2023"
     }
 ]

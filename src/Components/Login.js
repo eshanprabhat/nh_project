@@ -174,7 +174,7 @@ const Login = ({ setLoginStatus }) => {
       </div>
       <div className="second">
         <img src={second} alt="" />
-        <div className="container text-center erty">
+        <div className="text-center erty">
           <div className="row">
             <div className="col one">
               <img src={one} alt="one" />

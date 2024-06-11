@@ -25,7 +25,7 @@ const AccountDetails = ({
       />
       <div>
         <img className="image-3" src={one} alt="Profile" />
-        <div className="container aser">
+        <div className="aser">
           <div className="asdf">Personal Details:</div>
           <div style={{ padding: "5px" }}></div>
           <div className="aqwe">
@@ -43,7 +43,7 @@ const AccountDetails = ({
             <span className="awer">{myUser.email}</span>
           </div>
           <div style={{ padding: "10px" }}></div>
-          <div className="asdf">Personal Details:</div>
+          <div className="asdf">Account Details:</div>
           <div className="aqwe">
             <span className="asdf">Created On:</span>
             <span className="awer">{formattedDate}</span>
