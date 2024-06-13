@@ -79,7 +79,7 @@ const Signup = ({ setLoginStatus }) => {
         setLoginStatus(true);
         const phoneNumber = mobileNumber;
         const date = new Date();
-        const response = await axios.post("http://localhost:5000/api/users", {
+        const response = await axios.post("http://localhost:8000/api/users", {
           name,
           phoneNumber,
           email,

@@ -11,16 +11,16 @@ const PatientInfo = ({
   loginStatus,
   setLoginStatus,
 }) => {
+  setLoginStatus=(true);
   const location = useLocation();
-  const { id } = location.state || {};
-  console.log(id);
+  const { id, myUser } = location.state || {};
   const [patient, setPatient] = useState();
 
   useEffect(() => {
     const getPatient = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/patients/${id}`
+          `http://localhost:8000/api/patients/${id}`
         );
         setPatient(response.data.data.patient);
       } catch (error) {
@@ -30,7 +30,7 @@ const PatientInfo = ({
     getPatient();
   }, [id]);
 
-  console.log(patient);
+  // console.log(patient);
 
   let picture = null;
   if (patient) {
@@ -58,6 +58,7 @@ const PatientInfo = ({
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
+        user={myUser}
       />
       <div>
         {patient ? (

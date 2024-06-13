@@ -11,6 +11,7 @@ import AddPatient from "./Components/AccountInfo/AddPatient";
 import PatientList from "./Components/AccountInfo/PatientList";
 import PatientInfo from "./Components/AccountInfo/PatientInfo/PatientInfo";
 import PlanInfo from "./Components/PlanInfo";
+import PatientPlans from "./Components/PatientPlans";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -107,6 +108,17 @@ function App() {
           path="/plan-info"
           element={
             <PlanInfo
+              showLogout={showLogout}
+              setShowLogout={setShowLogout}
+              loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+            />
+          }
+        />
+        <Route
+          path="/plan-patient"
+          element={
+            <PatientPlans
               showLogout={showLogout}
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}

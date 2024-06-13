@@ -7,27 +7,8 @@
     "email": "eshan@gmail.com",
     "dob": "22/12/2002",
     "address": "Banglore",
-    "Reg_date": "2024-06-06T11:54:44.993Z"
-  },
-  {
-    "patient_id": 2,
-    "user_id": 1,
-    "name": "Kunal",
-    "gender": "Male",
-    "email": "kunal@gmail.com",
-    "dob": "18/10/2001",
-    "address": "Jamshedpur",
-    "Reg_date": "2024-06-06T11:54:44.993Z"
-  },
-  {
-    "patient_id": 3,
-    "user_id": 1,
-    "name": "Akansha",
-    "gender": "Female",
-    "email": "akansha@gmail.com",
-    "dob": "29/09/2007",
-    "address": "Jamshedpur",
-    "Reg_date": "2024-06-06T11:54:44.993Z"
+    "Reg_date": "2024-06-06T11:54:44.993Z",
+    "show": true
   },
   {
     "patient_id": 4,
@@ -37,26 +18,40 @@
     "email": "poojasinha@gmail.com",
     "dob": "20/11/2003",
     "address": "Vadodara",
-    "Reg_date": "2024-06-06T11:54:44.993Z"
+    "Reg_date": "2024-06-06T11:54:44.993Z",
+    "show": true
   },
   {
     "patient_id": 5,
+    "user_id": 1,
+    "name": "Kunal",
+    "gender": "Male",
+    "email": "kunal@gmail.com",
+    "dob": "18/10/2001",
+    "address": "Jamshedpur",
+    "Reg_date": "2024-06-12T12:10:59.918Z",
+    "show": true
+  },
+  {
+    "patient_id": 6,
+    "user_id": 1,
+    "name": "Akansha",
+    "gender": "Female",
+    "email": "akansha@gmail.com",
+    "dob": "29/09/2007",
+    "address": "Jamshedpur",
+    "Reg_date": "2024-06-12T12:12:51.897Z",
+    "show": true
+  },
+  {
+    "patient_id": 7,
     "user_id": 1,
     "name": "Sudeep",
     "gender": "Male",
     "email": "sudeep@gmail.com",
     "dob": "13/07/1997",
-    "address": "Jamshedpur",
-    "Reg_date": "2024-06-06T12:29:04.321Z"
-  },
-  {
-    "patient_id": 6,
-    "user_id": 1,
-    "name": "Rohini",
-    "gender": "Female",
-    "email": "rohini@gmail.com",
-    "dob": "12/10/2006",
-    "address": "Ahmedabad",
-    "Reg_date": "2024-06-10T04:35:32.469Z"
+    "address": "Ranchi",
+    "Reg_date": "2024-06-12T12:23:44.207Z",
+    "show": true
   }
 ]

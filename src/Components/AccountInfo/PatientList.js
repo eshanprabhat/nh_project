@@ -1,9 +1,10 @@
 import Hero from "../Hero";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import PatientCard from "./PatientInfo/PatientCard";
+import { Button } from "@mui/material";
 const PatientList = ({
   showLogout,
   setShowLogout,
@@ -12,16 +13,16 @@ const PatientList = ({
 }) => {
   setLoginStatus(true);
   const location = useLocation();
+  const navigate= useNavigate();
   const { myUser } = location.state || {};
   const [patientsList, setPatientsList] = useState([]);
-  //   console.log("Patient List", myUser);
   useEffect(() => {
     const fetchPatients = async () => {
       if (myUser && myUser.id) {
         try {
           const user_id = myUser.id;
           const response = await axios.get(
-            `http://localhost:5000/api/patients/user/${user_id}`
+            `http://localhost:8000/api/patients/user/${user_id}`
           );
           setPatientsList(response.data.data.patients);
         } catch (error) {
@@ -31,20 +32,24 @@ const PatientList = ({
     };
     fetchPatients();
   }, [myUser]);
-
+  const handleEmptyClick =()=>{
+    navigate("/add-patient",{state:{myUser}});
+  }
   if (!myUser) {
     return <p>User not found</p>;
   }
 
-  console.log(patientsList);
-
   let resultsHTML = null;
   if (patientsList.length > 0) {
     resultsHTML = patientsList.map((patient, i) => {
-      return <PatientCard patient={patient} key={i} />;
+        return <PatientCard myUser={myUser} patient={patient} key={i} />;
     });
   } else {
-    resultsHTML = <p>No results found</p>;
+    resultsHTML = (<div>
+    <div style={{"font-family":"Inter", "font-size":"30px"}}>No Patient Found</div>
+    <div style={{padding:"10px"}}></div>
+    <Button onClick={handleEmptyClick} className="mx-4" variant="contained">Add Patient</Button>
+    </div>);
   }
   return (
     <>
@@ -57,7 +62,7 @@ const PatientList = ({
         user={myUser}
       />
       <div style={{ padding: "20px" }}></div>
-      <div className="container">
+      <div className="d-flex justify-content-center">
         <div>{resultsHTML}</div>
       </div>
     </>

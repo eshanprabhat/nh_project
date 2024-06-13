@@ -11,12 +11,11 @@ const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
   const [plans, setPlans] = useState();
   useEffect(() => {
     const fetchPlans = async () => {
-      const response = await axios.get("http://localhost:5000/api/plans");
+      const response = await axios.get("http://localhost:8000/api/plans");
       setPlans(response.data.data.plans);
     };
     fetchPlans();
   }, []);
-  console.log(plans);
   let plansHtml = null;
   if (plans) {
     plansHtml = plans.map((plan, i) => {

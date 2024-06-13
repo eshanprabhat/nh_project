@@ -6,7 +6,7 @@ const PlanCard = ({ plan }) => {
   let featuresHTML = null;
   if(plan.features){
     featuresHTML=plan.features.map((feature,i)=>{
-      return <li key={i}>{feature}</li>
+      return <li className="check" key={i}>{feature}</li>
     })
   }else{
     featuresHTML="No Features found!!"
@@ -21,7 +21,7 @@ const PlanCard = ({ plan }) => {
         <div className="line"></div>
         <div className="plan-tagline">"{plan.tagline}"</div>
         <div className="plan-description plan-features">
-          <ul>
+          <ul style={{"list-style":"none"}}>
             {featuresHTML}
           </ul>
         </div>

@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = 5000;
+const PORT = 8000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -111,6 +111,7 @@ app.post("/api/patients", (req, res) => {
       address,
       Reg_date,
       Active,
+      show:true,
     };
 
     patients.push(newPatient);
@@ -134,7 +135,7 @@ app.get("/api/patients/user/:userId", (req, res) => {
 
     const patients = JSON.parse(data);
     const userPatients = patients.filter(
-      (patient) => patient.user_id === userId
+      (patient) => ((patient.user_id === userId) && patient.show===true)
     );
 
     res.status(200).json({
@@ -161,6 +162,41 @@ app.get("/api/patients/:id", (req, res) => {
     data: {
       patient,
     },
+  });
+});
+
+app.delete("/api/patients/:id", (req, res) => {
+  const id = req.params.id * 1;
+
+  fs.readFile(patientsFilePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading patients file:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    let patients = JSON.parse(data);
+    const patientIndex = patients.findIndex((patient) => patient.patient_id === id);
+
+    if (patientIndex === -1) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid ID",
+      });
+    }
+    patients[patientIndex].show = false;
+    // patients.splice(patientIndex, 1);
+
+    fs.writeFile(patientsFilePath, JSON.stringify(patients, null, 2), (err) => {
+      if (err) {
+        console.error("Error writing patients file:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+
+      res.status(204).json({
+        status: "success",
+        data: null,
+      });
+    });
   });
 });
 app.listen(PORT, () => {
