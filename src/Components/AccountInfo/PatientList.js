@@ -1,5 +1,5 @@
 import Hero from "../Hero";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -10,17 +10,16 @@ const PatientList = ({
   setShowLogout,
   loginStatus,
   setLoginStatus,
+  user
 }) => {
   setLoginStatus(true);
-  const location = useLocation();
   const navigate= useNavigate();
-  const { myUser } = location.state || {};
   const [patientsList, setPatientsList] = useState([]);
   useEffect(() => {
     const fetchPatients = async () => {
-      if (myUser && myUser.id) {
+      if (user && user._id) {
         try {
-          const user_id = myUser.id;
+          const user_id = user._id;
           const response = await axios.get(
             `http://localhost:8000/api/patients/user/${user_id}`
           );
@@ -31,18 +30,21 @@ const PatientList = ({
       }
     };
     fetchPatients();
-  }, [myUser]);
+  }, [user]);
   const handleEmptyClick =()=>{
-    navigate("/add-patient",{state:{myUser}});
+    navigate("/add-patient");
   }
-  if (!myUser) {
+  const handleDelete = (deletedPatientId) => {
+    setPatientsList(patientsList.filter(patient => patient._id !== deletedPatientId));
+  };
+  if (!user) {
     return <p>User not found</p>;
   }
 
   let resultsHTML = null;
   if (patientsList.length > 0) {
     resultsHTML = patientsList.map((patient, i) => {
-        return <PatientCard myUser={myUser} patient={patient} key={i} />;
+        return <PatientCard user={user} patient={patient} key={i} onDelete={handleDelete}/>;
     });
   } else {
     resultsHTML = (<div>
@@ -59,7 +61,7 @@ const PatientList = ({
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
-        user={myUser}
+        user={user}
       />
       <div style={{ padding: "20px" }}></div>
       <div className="d-flex justify-content-center">

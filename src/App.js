@@ -16,6 +16,7 @@ import PatientPlans from "./Components/PatientPlans";
 function App() {
   const [loginStatus, setLoginStatus] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
+  const [user,setUser]=useState();
   return (
     <div>
       <Routes>
@@ -27,6 +28,7 @@ function App() {
               setLoginStatus={setLoginStatus}
               showLogout={showLogout}
               setShowLogout={setShowLogout}
+              user={user}
             />
           }
         />
@@ -38,16 +40,17 @@ function App() {
               setLoginStatus={setLoginStatus}
               showLogout={showLogout}
               setShowLogout={setShowLogout}
+              user={user}
             />
           }
         />
         <Route
           path="/login"
-          element={<Login setLoginStatus={setLoginStatus} />}
+          element={<Login setLoginStatus={setLoginStatus} setUser={setUser}/>}
         />
         <Route
           path="/signup"
-          element={<Signup setLoginStatus={setLoginStatus} />}
+          element={<Signup setLoginStatus={setLoginStatus} setUser={setUser} />}
         />
         <Route
           path="/account-info"
@@ -57,6 +60,7 @@ function App() {
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
+              user={user}
             />
           }
         />
@@ -68,6 +72,7 @@ function App() {
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
+              user={user}
             />
           }
         />
@@ -79,6 +84,7 @@ function App() {
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
+              user={user}
             />
           }
         />
@@ -90,6 +96,7 @@ function App() {
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
+              user={user}
             />
           }
         />
@@ -101,6 +108,7 @@ function App() {
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
+              user={user}
             />
           }
         />
@@ -112,6 +120,7 @@ function App() {
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
+              user={user}
             />
           }
         />
@@ -123,6 +132,7 @@ function App() {
               setShowLogout={setShowLogout}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
+              user={user}
             />
           }
         />

@@ -4,16 +4,18 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import one from "../../Images/Unknown6.png";
 import two from "../../Images/Untitled design.png";
+import { CircularProgress } from "@mui/material";
 
 const PatientInfo = ({
   showLogout,
   setShowLogout,
   loginStatus,
   setLoginStatus,
+  user
 }) => {
   setLoginStatus=(true);
   const location = useLocation();
-  const { id, myUser } = location.state || {};
+  const { id } = location.state || {};
   const [patient, setPatient] = useState();
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const PatientInfo = ({
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
-        user={myUser}
+        user={user}
       />
       <div>
         {patient ? (
@@ -78,7 +80,7 @@ const PatientInfo = ({
             </div>
           </>
         ) : (
-          <div>Loading...</div>
+          <div style={{margin:"auto 50%"}}><CircularProgress /></div>
         )}
       </div>
     </>

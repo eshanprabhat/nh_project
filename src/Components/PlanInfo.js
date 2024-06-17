@@ -9,16 +9,17 @@ const PlanInfo = ({
   setLoginStatus,
   showLogout,
   setShowLogout,
+  user
 }) => {
   setLoginStatus(true);
   const location = useLocation();
   const navigate = useNavigate();
-  const { plan, user } = location.state || { plan: {}, user: {} };
+  const { plan } = location.state || {};
   const combinedFeaturesHTML = plan.features.map((feature, i) => (
     <div key={i}><b><img className="check2" src={tick} alt="tick"/>{feature}</b> {`: ${plan.features_info[i]}`}<div style={{padding:"10px"}}></div></div>
 ));
 const handleProceedClick =()=>{
-  navigate("/plan-patient", {state:{plan,user}});
+  navigate("/plan-patient", {state:{plan}});
 }
   return (
     <>

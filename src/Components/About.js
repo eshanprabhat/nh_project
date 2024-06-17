@@ -1,9 +1,6 @@
 import Hero from "./Hero";
-import { useLocation } from "react-router-dom";
-const About = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
+const About = ({ loginStatus, setLoginStatus, showLogout, setShowLogout,user }) => {
   setShowLogout(false);
-  const location = useLocation();
-  const { myUser } = location.state || {};
   return (
     <>
       <Hero
@@ -12,7 +9,7 @@ const About = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
-        user={myUser}
+        user={user}
       />
     </>
   );

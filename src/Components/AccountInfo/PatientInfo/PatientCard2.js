@@ -21,12 +21,12 @@ const PatientCard = ({ selectedPatients, setSelectedPatients, patient }) => {
       if (e.target.checked) {
         return [...prev, patient];
       } else {
-        return prev.filter((p) => p.patient_id !== patient.patient_id);
+        return prev.filter((p) => p._id !== patient._id);
       }
     });
   };
 
-  const isChecked = selectedPatients.some((p) => p.patient_id === patient.patient_id);
+  const isChecked = selectedPatients.some((p) => p._id === patient._id);
 
   return (
     <>
