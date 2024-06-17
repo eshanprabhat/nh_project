@@ -667,3 +667,44 @@ input:focus::placeholder {
   display: flex;
   align-items: center;
 }
+.patient-block{
+  position:relative;
+}
+.pat-ient{
+  display:inline-block;
+}
+.pay-ment{
+  display:inline-block;
+  position:absolute;
+  left:60%;
+  top:25%;
+  background-color: white;
+  border: 1px solid #a4a4a4;
+  width:400px;
+  height:350px;
+  border-radius: 15px;
+  box-shadow: 3px 3px 5px -1px #c4c4c4;
+  font-family: inter;
+}
+.payment-title{
+  margin:20px;
+  margin-left:25px;
+  font-weight: bold;
+  font-family: Inter;
+  font-size: 25px;
+}
+.payment-content-left{
+  display: inline-block;
+  margin-left: 25px;
+  font-size: 20px;
+
+}
+.payment-content-right{
+  display: inline-block;
+  margin-left:25px;
+  margin-right:20px;
+  font-size: 20px;
+}
+.payment-button{
+  margin:20px 21.7%;
+}

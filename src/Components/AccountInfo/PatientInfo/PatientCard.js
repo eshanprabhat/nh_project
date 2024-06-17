@@ -12,7 +12,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 
-const PatientCard = ({ myUser, patient }) => {
+const PatientCard = ({ myUser, patient , onDelete}) => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
@@ -33,7 +33,7 @@ const PatientCard = ({ myUser, patient }) => {
   const dob = getDOB(patient.dob);
   const age = getAge(dob);
   const patientClick = () => {
-    const id = patient.patient_id;
+    const id = patient._id;
     navigate("/patient-info", { state: { id, myUser } });
   };
   const handleClose = () => {
@@ -46,10 +46,11 @@ const PatientCard = ({ myUser, patient }) => {
   const handleDeleteClick = async () => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/patients/${patient.patient_id}`
+        `http://localhost:8000/api/patients/${patient._id}`
       );
+      onDelete(patient._id);
       handleClose();
-      navigate("/patient-list", { state: { myUser } });
+      navigate("/patient-list");
       // window.location.reload();
     } catch (error) {
       console.error("Error deleting patient", error);

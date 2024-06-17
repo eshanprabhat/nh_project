@@ -15,7 +15,7 @@ const Hero = ({
   const handleAccountClick = () => {
     setShowLogout(true);
     // const myUser = { user };
-    navigate("/account-info", { state: { myUser: user } });
+    navigate("/account-info");
   };
 
   const handleLogoutClick = () => {
@@ -25,10 +25,10 @@ const Hero = ({
     window.location.reload();
   };
   const handleLogoClick = () => {
-    navigate("/", { state: { myUser: user } });
+    navigate("/");
   };
   const handleAboutClick = () => {
-    navigate("/about", { state: { myUser: user } });
+    navigate("/about");
   };
 
   return (

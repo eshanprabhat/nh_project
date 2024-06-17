@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import second from "./Images/Firefly Health Insurance 82230.jpg";
 import one from "./Images/Screenshot 2024-05-30 at 3.27.15 PM.png";
 import two from "./Images/download.png";
@@ -9,16 +9,25 @@ import PhoneInput from "react-phone-input-2";
 import OtpInput from "otp-input-react";
 import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase";
+import axios from "axios";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import users from "../files/userdetails.json";
 
-const Login = ({ setLoginStatus }) => {
+
+const Login = ({ setLoginStatus, setUser }) => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [users, setUsers] = useState([]);
   const [otp, setOTP] = useState("");
   const [showOTP, setShowOTP] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState(null);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await axios.get("http://localhost:8000/api/users");
+      setUsers(response.data.data.users);
+    };
+    fetchUsers();
+  }, []);
   const handleInputChange = (value) => {
     setPhoneNumber(value);
   };
@@ -58,7 +67,7 @@ const Login = ({ setLoginStatus }) => {
       });
   };
   const handlePhoneNumberVerification = (phoneNumber) => {
-    const user = users.find((el) => el.mobileNumber === phoneNumber);
+    const user = users.find((el) => el.phoneNumber === phoneNumber);
     return new Promise((resolve) => {
       if (!user) {
         console.log("User not Verified!");
@@ -85,12 +94,13 @@ const Login = ({ setLoginStatus }) => {
   const handleOtpChange = (value) => {
     setOTP(value);
   };
-  const getUser = (phoneNumber) => {
-    const user = users.find((el) => el.mobileNumber === phoneNumber);
+  const getUser = (phoneNumber) => {;
+    const user = users.find((el) => el.phoneNumber === phoneNumber);
     return user;
   };
   const formatted = `+${phoneNumber}`;
   const myUser = getUser(formatted);
+
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
@@ -101,7 +111,8 @@ const Login = ({ setLoginStatus }) => {
           const user = result.user;
           console.log("User signed in successfully:", user);
           setLoginStatus(true);
-          navigate("/", { state: { myUser } });
+          setUser(myUser);
+          navigate("/");
         })
         .catch((error) => {
           console.log("OTP verification failed", error);

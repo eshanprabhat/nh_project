@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import Hero from "./Hero";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import PlanCard from "./PlanCard";
 
-const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
+const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout, user }) => {
   setShowLogout(false);
-  const location = useLocation();
-  const { myUser } = location.state || {};
   const [plans, setPlans] = useState();
   useEffect(() => {
     const fetchPlans = async () => {
@@ -19,7 +16,7 @@ const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
   let plansHtml = null;
   if (plans) {
     plansHtml = plans.map((plan, i) => {
-      return <PlanCard plan={plan} user={myUser} key={i} loginStatus={loginStatus}/>;
+      return <PlanCard plan={plan} user={user} key={i} loginStatus={loginStatus}/>;
     });
   } else {
     plansHtml = <p>No results found</p>;
@@ -32,7 +29,7 @@ const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout }) => {
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
-        user={myUser}
+        user={user}
       />
       <div className="lkjh">Plans</div>
       <div className="container">

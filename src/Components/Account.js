@@ -1,5 +1,5 @@
 import Hero from "./Hero";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import first from "./Images/Unknown2.png";
 import second from "./Images/Screenshot 2024-05-28 at 12.58.51 PM.png";
 import third from "./Images/Unknown3.png";
@@ -10,23 +10,21 @@ const Account = ({
   setShowLogout,
   loginStatus,
   setLoginStatus,
+  user
 }) => {
   setShowLogout(true);
-  const location = useLocation();
-  const { myUser } = location.state || {};
   const navigate = useNavigate();
-  // console.log("Account:", myUser);
   const clickAccoutDetails = () => {
     setShowLogout(false);
-    navigate("/account-details", { state: { myUser } });
+    navigate("/account-details");
   };
   const clickAddPatient = () => {
     setShowLogout(false);
-    navigate("/add-patient", { state: { myUser } });
+    navigate("/add-patient");
   };
   const clickPatientList = () => {
     setShowLogout(false);
-    navigate("/patient-list", { state: { myUser } });
+    navigate("/patient-list");
   };
   return (
     <>
@@ -36,7 +34,7 @@ const Account = ({
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
-        user={myUser}
+        user={user}
       />
       <div className="account-links">
         <img className="image-1" src={avatar} alt="avatar" />

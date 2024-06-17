@@ -11,7 +11,7 @@ import { auth } from "../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import axios from "axios";
 
-const Signup = ({ setLoginStatus }) => {
+const Signup = ({ setLoginStatus, setUser}) => {
   const [mobileNumber, setmobileNumber] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -24,7 +24,6 @@ const Signup = ({ setLoginStatus }) => {
       window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
         size: "invisible",
         callback: (response) => {
-          onSignInSubmit();
           console.log("Captcha Verified!");
         },
       });
@@ -77,7 +76,7 @@ const Signup = ({ setLoginStatus }) => {
         const user = result.user;
         console.log("User signed in successfully", user);
         setLoginStatus(true);
-        const phoneNumber = mobileNumber;
+        const phoneNumber = `+${mobileNumber}`;
         const date = new Date();
         const response = await axios.post("http://localhost:8000/api/users", {
           name,
@@ -85,8 +84,8 @@ const Signup = ({ setLoginStatus }) => {
           email,
           date,
         });
-        const myUser = response.data;
-        navigate("/", { state: { myUser } });
+        setUser(response.data.data.user);
+        navigate("/");
         alert("User signed up successfully");
       } catch (error) {
         console.error("OTP verification failed", error);

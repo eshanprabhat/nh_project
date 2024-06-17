@@ -24,6 +24,7 @@ const AddPatient = ({
   setShowLogout,
   loginStatus,
   setLoginStatus,
+  user
 }) => {
   setLoginStatus(true);
   const [patientName, setPatientName] = useState("");
@@ -31,11 +32,11 @@ const AddPatient = ({
   const [dob, setDOB] = useState(dayjs(null));
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [active, setActive] = useState(false);
+  const [Active, setActive] = useState(false);
   const [alert, setAlert] = useState(null); // State for alert
 
   const location = useLocation();
-  const { myUser,plan } = location.state || {myUser:{},plan:{}};
+  const { plan } = location.state || {};
 
   const navigate = useNavigate();
 
@@ -62,7 +63,7 @@ const AddPatient = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setActive(false); // Just to ignore warnings : Has to be removed later
-    const user_id = myUser.id;
+    const user_id = user._id;
     const name = patientName;
     const Reg_date = new Date();
 
@@ -75,10 +76,10 @@ const AddPatient = ({
         dob: dob.format("DD/MM/YYYY"),
         address,
         Reg_date,
-        active,
+        Active,
       });
 
-      const patient = response.data;
+      const patient = response.data.data.patient;
       console.log(patient);
 
       setAlert({
@@ -89,10 +90,9 @@ const AddPatient = ({
       // Optionally, you can navigate after showing the alert for some time
       setTimeout(() => {
         if(plan){
-          const user=myUser;
-          navigate("/plan-patient",{state:{plan,user}});
+          navigate("/plan-patient",{state:{plan}});
         }else{
-          navigate("/patient-list", { state: { myUser } });
+          navigate("/patient-list");
         }
       }, 1000); // Adjust the time as needed
 
@@ -112,7 +112,7 @@ const AddPatient = ({
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
-        user={myUser}
+        user={user}
       />
       <div className="m-5">
         {alert && (<>
@@ -120,8 +120,8 @@ const AddPatient = ({
             <AlertTitle>{alert.severity === 'success' ? 'Success' : 'Error'}</AlertTitle>
             {alert.message}
           </Alert>
-          <CircularProgress className="circular" />
-          </>
+          {alert.severity==='success'?<CircularProgress className="circular" />:<></>}
+     </>
         )}
         <div className="fw-bold fs-4 font-family-newsreader ghyi">
           Patient's Name:

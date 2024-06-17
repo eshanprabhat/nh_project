@@ -1,8 +1,7 @@
 import poster from "./Images/download2.png";
 import {useNavigate} from "react-router-dom";
-const PlanCard = ({ plan, user, loginStatus }) => {
+const PlanCard = ({ plan, loginStatus }) => {
   const navigate=useNavigate();
-
   let featuresHTML = null;
   if(plan.features){
     featuresHTML=plan.features.map((feature,i)=>{
@@ -13,7 +12,7 @@ const PlanCard = ({ plan, user, loginStatus }) => {
   }
   const planClick = ()=>{
     if(loginStatus){
-      navigate("/plan-info",{state:{plan,user}});
+      navigate("/plan-info",{state:{plan}});
     }else{
       navigate("/login");
     }
