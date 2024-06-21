@@ -9,11 +9,18 @@ const PORT = process.env.PORT || 8000;
 const Users = require("./models/UserModel");
 const Plans = require("./models/PlanModel");
 const Patients = require("./models/PatientModel");
+const PatientPlans = require("./models/PatientPlansModel");
+const shortid =require("shortid");
+const Razorpay = require("razorpay");
+const path = require("path");
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-
+const razorPay = new Razorpay({
+  key_id:process.env.RAZORPAY_KEY_ID,
+  key_secret:process.env.RAZORPAY_KEY_SECRET
+})
 const DB = process.env.DATABASE.replace(
   "<password>",
   process.env.DATABASE_PASSWORD
@@ -209,6 +216,86 @@ app.delete("/api/patients/:id", async(req, res) => {
     res.status(404).json({
       status:"fail",
       message:error,
+    })
+  }
+});
+
+app.get("/logo.jpg", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "Components", "Images", "Narayana_Health_Logo.jpg"));
+});
+
+app.post("/razorpay", async (req, res) => {
+  const { amount } = req.body;
+  const payment_capture = 1;
+  const currency = "INR";
+
+  const options = {
+      amount: amount * 100, // converting amount to paise
+      currency: currency,
+      receipt: shortid.generate(),
+      payment_capture
+  };
+
+  try {
+      const response = await razorPay.orders.create(options);
+      console.log(response);
+      res.status(200).json({
+          id: response.id,
+          currency: response.currency,
+          amount: response.amount
+      });
+  } catch (error) {
+      console.error("Error in /razorpay:", error);
+      res.status(500).json({
+          error: error.message
+      });
+  }
+});
+
+app.post("/api/patient-plans", async (req, res) => {
+  try {
+      const newPatientPlan = await PatientPlans.create(req.body);
+      res.status(201).json({
+          status: "success",
+          data: {
+              newPatientPlan,
+          },
+      });
+  } catch (error) {
+      console.error("Error in /api/patient-plans:", error); // Log the error for debugging
+      res.status(400).json({
+          status: "fail",
+          message: error.message,
+      });
+  }
+});
+app.get("/api/patient-plans", async (req, res) => {
+  const patientPlans = await PatientPlans.find();
+  res.status(200).json({
+    status: "success",
+    data: {
+      patientPlans,
+    },
+  });
+});
+
+app.get("/api/patient-plans/user/:userId", async(req, res) => {
+  try{
+  const userId = req.params.userId;
+  const patientPlans = await PatientPlans.find({
+    user_id: userId,
+  });
+  res.status(200).json({
+    status: "success",
+    results: patientPlans.length,
+    data: {
+      patientPlans,
+    },
+  });
+  }catch(error){
+    res.status(404).json({
+      status:"fail",
+      message:error
     })
   }
 });
