@@ -6,6 +6,7 @@ import axios from "axios";
 import { Button } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import displayRazorPay from "../utils/PaymentGateway";
 const PatientPlans = ({
   loginStatus,
   setLoginStatus,
@@ -70,7 +71,9 @@ const PatientPlans = ({
       </div>
     );
   }
-  
+  const displayPayment=()=>{
+    displayRazorPay(total,user,selectedPatients,plan);
+  }
   return (
     <>
       <Hero
@@ -113,7 +116,7 @@ const PatientPlans = ({
               <div className="payment-content-left p-2"><b>Total</b></div><div className="payment-content-right p-2"><b>Rs. {total}</b></div>
               </div>
               <div className="payment-button">
-              <Button variant="contained">Proceed to Payment<ArrowForwardIcon /></Button>
+              <Button onClick={displayPayment} variant="contained">Proceed to Payment<ArrowForwardIcon /></Button>
               </div>
             </div>
           </>

@@ -26,6 +26,10 @@ const Account = ({
     setShowLogout(false);
     navigate("/patient-list");
   };
+  const clickMyPlans = () => {
+    setShowLogout(false);
+    navigate("/my-plans");
+  };
   return (
     <>
       <Hero
@@ -42,7 +46,7 @@ const Account = ({
           <img className="image" src={first} alt="Account Details" />
           Account Details
         </div>
-        <div className="account-link">
+        <div className="account-link" onClick={clickMyPlans}>
           <img className="image" src={second} alt="My Plans" />
           My Plans
         </div>
