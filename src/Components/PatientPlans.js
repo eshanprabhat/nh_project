@@ -14,9 +14,14 @@ const PatientPlans = ({
   setShowLogout,
   user,
 }) => {
-  setLoginStatus(true);
-  const location = useLocation();
   const navigate = useNavigate();
+    useEffect(()=>{
+      if (loginStatus===false){
+        navigate("/");
+        window.location.reload();
+      }
+    },[loginStatus, navigate]);
+  const location = useLocation();
   const { plan } = location.state || {};
   const [patientList, setPatientList] = useState([]);
   const [selectedPatients, setSelectedPatients] = useState([]);

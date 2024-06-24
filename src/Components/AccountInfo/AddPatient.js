@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Hero from "../Hero";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
@@ -26,7 +26,13 @@ const AddPatient = ({
   setLoginStatus,
   user
 }) => {
-  setLoginStatus(true);
+  const navigate = useNavigate();
+    useEffect(()=>{
+      if (loginStatus===false){
+        navigate("/");
+        window.location.reload();
+      }
+    },[loginStatus, navigate]);
   const [patientName, setPatientName] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDOB] = useState(dayjs(null));
@@ -37,8 +43,6 @@ const AddPatient = ({
 
   const location = useLocation();
   const { plan } = location.state || {};
-
-  const navigate = useNavigate();
 
   const handlePatientName = (event) => {
     setPatientName(event.target.value);

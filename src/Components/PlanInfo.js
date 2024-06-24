@@ -1,5 +1,6 @@
 import Hero from "./Hero";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import PlanCard2 from "./PlanCard2";
 import tick from "./Images/3550119.png";
 import Button from '@mui/material/Button';
@@ -11,9 +12,15 @@ const PlanInfo = ({
   setShowLogout,
   user
 }) => {
-  setLoginStatus(true);
-  const location = useLocation();
   const navigate = useNavigate();
+    useEffect(()=>{
+      if (loginStatus===false){
+        navigate("/");
+        window.location.reload();
+      }
+    },[loginStatus, navigate]);
+  const location = useLocation();
+
   const { plan } = location.state || {};
   const combinedFeaturesHTML = plan.features.map((feature, i) => (
     <div key={i}><b><img className="check2" src={tick} alt="tick"/>{feature}</b> {`: ${plan.features_info[i]}`}<div style={{padding:"10px"}}></div></div>

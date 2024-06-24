@@ -12,8 +12,13 @@ const PatientList = ({
   setLoginStatus,
   user
 }) => {
-  setLoginStatus(true);
-  const navigate= useNavigate();
+  const navigate = useNavigate();
+    useEffect(()=>{
+      if (loginStatus===false){
+        navigate("/");
+        window.location.reload();
+      }
+    },[loginStatus, navigate]);
   const [patientsList, setPatientsList] = useState([]);
   useEffect(() => {
     const fetchPatients = async () => {
