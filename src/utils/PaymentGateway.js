@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function displayRazorPay(total, user, selectedPatients, plan) {
+export default async function displayRazorPay(total, user, selectedPatients, plan, navigate) {
     try {
         const response = await fetch("http://localhost:8000/razorpay", {
             method: 'POST',
@@ -15,18 +15,19 @@ export default async function displayRazorPay(total, user, selectedPatients, pla
             const today = new Date();
             const expiry = new Date();
             expiry.setFullYear(today.getFullYear() + 1);
-
             try {
                 const response = await axios.post("http://localhost:8000/api/patient-plans", {
                     user_id: user._id,
-                    plan_id: plan._id,
+                    plan: plan,
                     selectedPatients,
                     Purchased_On: today,
                     Expiry_Date: expiry,
                     order_id: r.razorpay_order_id,
-                    payment_id: r.razorpay_payment_id
+                    payment_id: r.razorpay_payment_id,
+                    total_amount: total
                 });
                 console.log(response.data);
+                navigate("/my-plans");
             } catch (error) {
                 console.error("Error in actionSubmit:", error);
             }

@@ -34,9 +34,9 @@ const Hero = ({
   return (
     <div>
       <div className="top">
-        <header className="text-white p-5 hero-container">
+        <header className="text-white p-4 hero-container">
+          <div className="logo">
           <img
-            className="logo"
             src={logo}
             alt="logo"
             height={70}
@@ -44,6 +44,7 @@ const Hero = ({
             style={{ cursor: "pointer" }}
             onClick={handleLogoClick}
           />
+           </div>
           <div className="hero-text">{text}</div>
           <div className="links">
             <ul className="nav justify-content-end">

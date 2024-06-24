@@ -200,6 +200,22 @@ app.get("/api/patients/:id", async (req, res) => {
     })
   }
 });
+app.get("/api/plans/:id", async (req, res) => {
+  try{
+    const plan= await Plans.findById(req.params.id);
+    res.status(200).json({
+      status:"success",
+      data:{
+        plan,
+      }
+    })
+  }catch(error){
+    res.status(404).json({
+      status:"fail",
+      message:error
+    })
+  }
+});
 
 app.delete("/api/patients/:id", async(req, res) => {
   try{
@@ -269,6 +285,7 @@ app.post("/api/patient-plans", async (req, res) => {
       });
   }
 });
+
 app.get("/api/patient-plans", async (req, res) => {
   const patientPlans = await PatientPlans.find();
   res.status(200).json({

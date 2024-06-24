@@ -72,7 +72,7 @@ const PatientPlans = ({
     );
   }
   const displayPayment=()=>{
-    displayRazorPay(total,user,selectedPatients,plan);
+    displayRazorPay(total,user,selectedPatients,plan, navigate);
   }
   return (
     <>
