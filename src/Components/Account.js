@@ -1,5 +1,6 @@
 import Hero from "./Hero";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import first from "./Images/Unknown2.png";
 import second from "./Images/Screenshot 2024-05-28 at 12.58.51 PM.png";
 import third from "./Images/Unknown3.png";
@@ -12,8 +13,14 @@ const Account = ({
   setLoginStatus,
   user
 }) => {
-  setShowLogout(true);
   const navigate = useNavigate();
+    useEffect(()=>{
+      if (loginStatus===false){
+        navigate("/");
+        window.location.reload();
+      }
+    },[loginStatus, navigate]);
+  setShowLogout(true);
   const clickAccoutDetails = () => {
     setShowLogout(false);
     navigate("/account-details");

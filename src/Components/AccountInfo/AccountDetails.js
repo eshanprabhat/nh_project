@@ -1,6 +1,8 @@
 import Hero from "../Hero";
 import one from "../Images/user-member-avatar-face-profile-icon-vector-22965342.jpg";
 import moment from "moment";
+import { useNavigate} from "react-router-dom";
+import { useEffect } from "react";
 const AccountDetails = ({
   showLogout,
   setShowLogout,
@@ -8,7 +10,13 @@ const AccountDetails = ({
   setLoginStatus,
   user
 }) => {
-  setLoginStatus(true);
+  const navigate = useNavigate();
+    useEffect(()=>{
+      if (loginStatus===false){
+        navigate("/");
+        window.location.reload();
+      }
+    },[loginStatus, navigate]);
   console.log("AccountDetails:", user);
   let formattedDate = moment(user.date).format("MMMM Do YYYY, h:mm:ss a");
   return (

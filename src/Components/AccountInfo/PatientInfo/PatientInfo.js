@@ -1,6 +1,6 @@
 import Hero from "../../Hero";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import axios from "axios";
 import one from "../../Images/Unknown6.png";
 import two from "../../Images/Untitled design.png";
@@ -13,7 +13,13 @@ const PatientInfo = ({
   setLoginStatus,
   user
 }) => {
-  setLoginStatus=(true);
+  const navigate = useNavigate();
+    useEffect(()=>{
+      if (loginStatus===false){
+        navigate("/");
+        window.location.reload();
+      }
+    },[loginStatus, navigate]);
   const location = useLocation();
   const { id } = location.state || {};
   const [patient, setPatient] = useState();
