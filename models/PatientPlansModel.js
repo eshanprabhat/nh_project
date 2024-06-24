@@ -4,8 +4,8 @@ const patientPlansSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    plan_id:{
-        type:String,
+    plan:{
+        type:{},
         required:true
     },
     selectedPatients:{
@@ -26,6 +26,10 @@ const patientPlansSchema = new mongoose.Schema({
     },
     payment_id:{
         type:String,
+        required:true
+    },
+    total_amount:{
+        type:Number,
         required:true
     }
 });
