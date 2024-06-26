@@ -1,16 +1,12 @@
 import Hero from "./Hero";
-const About = ({ loginStatus, setLoginStatus, showLogout, setShowLogout,user }) => {
-  setShowLogout(false);
+const About = ({ loginStatus }) => {
   return (
     <>
       <Hero
         text="About Us"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
-        user={user}
       />
+      <div style={{padding:"60px"}}/>
     </>
   );
 };

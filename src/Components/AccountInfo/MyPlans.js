@@ -6,10 +6,7 @@ import PatientPlansCard from "../../utils/PatientPlanCard";
 
 
 const MyPlans = ({
-    showLogout,
-    setShowLogout,
     loginStatus,
-    setLoginStatus,
     user
   })=>{
     const navigate = useNavigate();
@@ -41,11 +38,9 @@ return(
     <Hero
         text="My Plans"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
         user={user}
       />
+      <div style={{padding:"60px"}} />
       <div>{resultsPatientPlan}</div>
 
     </>

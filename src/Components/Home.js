@@ -4,8 +4,7 @@ import axios from "axios";
 import PlanCard from "./PlanCard";
 import { CircularProgress } from "@mui/material";
 
-const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout, user }) => {
-  setShowLogout(false);
+const Home = ({ loginStatus, user }) => {
   const [plans, setPlans] = useState();
 
   useEffect(() => {
@@ -19,7 +18,7 @@ const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout, user }) 
   let plansHtml = null;
   if (plans) {
     plansHtml = plans.map((plan, i) => {
-      return <PlanCard plan={plan} user={user} key={i} loginStatus={loginStatus}/>;
+      return <PlanCard plan={plan} user={user} key={i}/>;
     });
   } else {
     plansHtml = <CircularProgress />;
@@ -30,11 +29,8 @@ const Home = ({ loginStatus, setLoginStatus, showLogout, setShowLogout, user }) 
       <Hero
         text="Health Insurance"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
-        user={user}
       />
+      <div style={{padding:"50px"}}/>
       <div className="lkjh">Plans</div>
       <div className="container">
         <div className="plan-container">{plansHtml}</div>

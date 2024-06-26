@@ -7,10 +7,7 @@ import two from "../../Images/Untitled design.png";
 import { CircularProgress } from "@mui/material";
 
 const PatientInfo = ({
-  showLogout,
-  setShowLogout,
   loginStatus,
-  setLoginStatus,
   user
 }) => {
   const navigate = useNavigate();
@@ -63,11 +60,9 @@ const PatientInfo = ({
       <Hero
         text="Patient List"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
         user={user}
       />
+      <div style={{padding:"60px"}} />
       <div>
         {patient ? (
           <>

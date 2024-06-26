@@ -1,6 +1,6 @@
 import poster from "./Images/download2.png";
 import {useNavigate} from "react-router-dom";
-const PlanCard = ({ plan, loginStatus }) => {
+const PlanCard = ({ plan }) => {
   const navigate=useNavigate();
   let featuresHTML = null;
   if(plan.features){
@@ -11,11 +11,7 @@ const PlanCard = ({ plan, loginStatus }) => {
     featuresHTML="No Features found!!"
   }
   const planClick = ()=>{
-    if(loginStatus){
-      navigate("/plan-info",{state:{plan}});
-    }else{
-      navigate("/login");
-    }
+    navigate("/plan-info",{state:{plan}});
   }
 
   return (

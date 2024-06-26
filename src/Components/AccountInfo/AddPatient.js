@@ -20,10 +20,7 @@ import FormControl from '@mui/material/FormControl';
 dayjs.extend(localizedFormat);
 
 const AddPatient = ({
-  showLogout,
-  setShowLogout,
   loginStatus,
-  setLoginStatus,
   user
 }) => {
   const navigate = useNavigate();
@@ -113,12 +110,10 @@ const AddPatient = ({
       <Hero
         text="Add Patient"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
         user={user}
       />
-      <div className="m-5">
+      <div style={{ padding: "60px" }} />
+      <div className="add-patient">
         {alert && (<>
           <Alert variant="filled" severity={alert.severity}>
             <AlertTitle>{alert.severity === 'success' ? 'Success' : 'Error'}</AlertTitle>

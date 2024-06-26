@@ -6,10 +6,7 @@ import { useState } from "react";
 import PatientCard from "./PatientInfo/PatientCard";
 import { Button } from "@mui/material";
 const PatientList = ({
-  showLogout,
-  setShowLogout,
   loginStatus,
-  setLoginStatus,
   user
 }) => {
   const navigate = useNavigate();
@@ -63,12 +60,9 @@ const PatientList = ({
       <Hero
         text="Patient List"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
         user={user}
       />
-      <div style={{ padding: "20px" }}></div>
+      <div style={{ padding: "60px" }}></div>
       <div className="d-flex justify-content-center">
         <div>{resultsHTML}</div>
       </div>
