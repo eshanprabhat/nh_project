@@ -7,34 +7,26 @@ import third from "./Images/Unknown3.png";
 import fourth from "./Images/Unknown4.png";
 import avatar from "./Images/user-member-avatar-face-profile-icon-vector-22965342.jpg";
 const Account = ({
-  showLogout,
-  setShowLogout,
   loginStatus,
-  setLoginStatus,
   user
 }) => {
   const navigate = useNavigate();
-    useEffect(()=>{
-      if (loginStatus===false){
-        navigate("/");
-        window.location.reload();
-      }
-    },[loginStatus, navigate]);
-  setShowLogout(true);
+  useEffect(()=>{
+    if (loginStatus===false){
+      navigate("/");
+      window.location.reload();
+    }
+  },[loginStatus, navigate]);
   const clickAccoutDetails = () => {
-    setShowLogout(false);
     navigate("/account-details");
   };
   const clickAddPatient = () => {
-    setShowLogout(false);
     navigate("/add-patient");
   };
   const clickPatientList = () => {
-    setShowLogout(false);
     navigate("/patient-list");
   };
   const clickMyPlans = () => {
-    setShowLogout(false);
     navigate("/my-plans");
   };
   return (
@@ -42,13 +34,12 @@ const Account = ({
       <Hero
         text="My Account"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
         user={user}
       />
       <div className="account-links">
+        <div style={{padding:"10px"}} />
         <img className="image-1" src={avatar} alt="avatar" />
+        <div style={{padding:"10px"}} />
         <div className="account-link" onClick={clickAccoutDetails}>
           <img className="image" src={first} alt="Account Details" />
           Account Details

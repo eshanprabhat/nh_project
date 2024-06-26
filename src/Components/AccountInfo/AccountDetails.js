@@ -4,10 +4,7 @@ import moment from "moment";
 import { useNavigate} from "react-router-dom";
 import { useEffect } from "react";
 const AccountDetails = ({
-  showLogout,
-  setShowLogout,
   loginStatus,
-  setLoginStatus,
   user
 }) => {
   const navigate = useNavigate();
@@ -24,12 +21,10 @@ const AccountDetails = ({
       <Hero
         text="Account details"
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
         user={user}
       />
-      <div>
+      <div style={{padding:"60px"}}/>
+      <div className="container">
         <img className="image-3" src={one} alt="Profile" />
         <div className="aser">
           <div className="asdf"><u>Personal Details:</u></div>

@@ -9,9 +9,6 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import displayRazorPay from "../utils/PaymentGateway";
 const PatientPlans = ({
   loginStatus,
-  setLoginStatus,
-  showLogout,
-  setShowLogout,
   user,
 }) => {
   const navigate = useNavigate();
@@ -84,11 +81,9 @@ const PatientPlans = ({
       <Hero
         text={`${plan.plan_name} Plan`}
         loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-        showLogout={showLogout}
-        setShowLogout={setShowLogout}
         user={user}
       />
+      <div style={{padding:"60px"}}/>
       <div className="patient-block">
         <div className="pat-ient">
           <div className="tryr">Select Patients</div>

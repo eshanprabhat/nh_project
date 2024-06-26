@@ -16,7 +16,6 @@ import MyPlans from "./Components/AccountInfo/MyPlans";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(false);
-  const [showLogout, setShowLogout] = useState(false);
   const [user,setUser]=useState();
   const loadScript =(src)=>{
     return new Promise((resolve)=>{
@@ -44,9 +43,6 @@ function App() {
           element={
             <Home
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               user={user}
             />
           }
@@ -56,9 +52,6 @@ function App() {
           element={
             <About
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               user={user}
             />
           }
@@ -75,10 +68,7 @@ function App() {
           path="/account-info"
           element={
             <Account
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
@@ -87,10 +77,7 @@ function App() {
           path="/account-details"
           element={
             <AccountDetails
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
@@ -99,10 +86,7 @@ function App() {
           path="/add-patient"
           element={
             <AddPatient
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
@@ -111,10 +95,7 @@ function App() {
           path="/my-plans"
           element={
             <MyPlans
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
@@ -123,10 +104,7 @@ function App() {
           path="/patient-list"
           element={
             <PatientList
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
@@ -135,10 +113,7 @@ function App() {
           path="/patient-info"
           element={
             <PatientInfo
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
@@ -147,10 +122,7 @@ function App() {
           path="/plan-info"
           element={
             <PlanInfo
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
@@ -159,10 +131,7 @@ function App() {
           path="/plan-patient"
           element={
             <PatientPlans
-              showLogout={showLogout}
-              setShowLogout={setShowLogout}
               loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
               user={user}
             />
           }
