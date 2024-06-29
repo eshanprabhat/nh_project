@@ -13,9 +13,10 @@ body {
   width: 100%;
   background-color: white; /* Set a background color to avoid transparency issues */
   z-index: 1000;
-  box-shadow: 0px 0px 10px -1px #787878;
+  box-shadow: 0px 0px 10px -1px #bfbfbf;
   padding: 10px; /* Add padding for spacing */
 }
+
 .hero-text {
   font-family: newsreader;
   display:inline-block;
@@ -23,7 +24,6 @@ body {
   height: 100%;
   color: #345c81;
   font-size: 40px;
-  cursor: pointer;
 }
 .logo {
   cursor: pointer;
@@ -40,6 +40,44 @@ body {
   gap: 10px; /* Add gap between links */
   
 }
+.ablink{
+  color:#282c34;
+  text-decoration: none;
+  padding: 10px 30px;
+  font-size: 20px;
+  font-family: Inter;
+  margin-right: 20px;
+  margin-top: -10px;
+}
+.login{
+  background-color: #fff;
+  border: 4px solid #0F2C59;
+  border-radius: 15px;
+  box-shadow: 3px 3px 5px -1px #777777;
+  transition: background-color 0.2s;
+}
+.login:hover{
+  background-color: rgb(212, 212, 212);
+}
+.login:active{
+  background-color: rgb(172, 172, 172);
+}
+.signup{
+  border: 4px solid #0F2C59;
+  border-radius: 15px;
+  background-color: #0F2C59;
+  color: white;
+  box-shadow: 3px 3px 5px -1px #777777;
+  transition: (background-color,border-color) 0.2s;
+}
+.signup:hover{
+  background-color: #0b2141;
+  border-color: #0b2141;
+}
+.signup:active{
+  background-color: #091932;
+  border-color: #091932;
+}
 .page{
   background-color: white;
   position: relative;
@@ -50,7 +88,7 @@ body {
   background-color: #f5f5f5;
   width:40%;
   height: 100vh;
-  box-shadow: 3px 3px 5px -1px #777777;
+  box-shadow: 3px 3px 5px -1px #bfbfbf;
   position: relative;
   box-sizing: border-box;
 }
@@ -99,7 +137,7 @@ body {
   font-family: newsreader;
   font-size: 20px;
   color: #131519;
-  box-shadow: 3px 3px 5px -1px #777777;
+  box-shadow: 3px 3px 5px -1px #bfbfbf;
 }
 input:focus::placeholder {
   color: transparent;
@@ -114,7 +152,7 @@ input:focus::placeholder {
   font-size: 20px;
   background-color: #951E25;
   color:white;
-  box-shadow: 3px 3px 5px -1px #777777;
+  box-shadow: 3px 3px 5px -1px #bfbfbf;
 }
 .erty{
   padding-top: 50px;
@@ -174,7 +212,7 @@ input:focus::placeholder {
   font-family: newsreader !important;
   font-size: 20px !important;
   color: #131519 !important;
-  box-shadow: 3px 3px 5px -1px #777777 !important;
+  box-shadow: 3px 3px 5px -1px #bfbfbf !important;
   width: 280px !important;
 }
 
@@ -243,6 +281,14 @@ input:focus::placeholder {
   filter:contrast(90%);
   height:250px;
   width:auto;
+  border-radius: 100%;
+}
+.image-1:hover{
+  filter:brightness(70%);
+  cursor: pointer;
+}
+.image-1:active{
+  filter:brightness(50%);
 }
 .image-3{
   height:200px;
@@ -306,7 +352,7 @@ input:focus::placeholder {
   font-weight: 700;
   color: white;
   border-radius: 15px;
-  box-shadow: 3px 3px 5px -1px #777777;
+  box-shadow: 3px 3px 5px -1px #bfbfbf;
   transition: transform 0.2s;
 }
 
@@ -659,6 +705,32 @@ input:focus::placeholder {
   padding: 20px 50px;
   margin-top: 20px;
 }
+.acblink{
+  height:60px;
+  width:160px;
+  margin-top:-17px;
+  margin-right: 5px;
+  background-color: white;
+  border: 1px solid #949494;
+  box-shadow: 3px 3px 5px -1px #c7c7c7;
+  transition: background-color 0.2;
+}
+.acblink:hover{
+  background-color: #d9d9d9;
+}
+.acblink:active{
+  background-color: #b4b4b4;
+}
+@media (min-width: 1000px) {
+  .drawer{
+    display:none;
+  }
+}
+@media (max-width: 1000px) {
+  .buttons{
+    display:none;
+  }
+}
 
 @media (max-width: 768px) {
   .info-sec {
@@ -666,6 +738,7 @@ input:focus::placeholder {
     border: 1px solid #949494;
     text-indent: 0;
   }
+  
 
   .des-pl {
     font-size: 16px;
@@ -684,7 +757,7 @@ input:focus::placeholder {
 
 .pcard-2 {
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: space-between;
   background-color: white;
   margin: 10px;
@@ -694,6 +767,7 @@ input:focus::placeholder {
   box-shadow: 3px 3px 5px -1px #c4c4c4;
   border-radius: 15px;
 }
+
 .patphoto-2 {
   padding-left: 10px;
   height: 50px;
@@ -710,61 +784,108 @@ input:focus::placeholder {
   font-size: 20px;
   font-weight: bold;
 }
+
 .pcard-element-2 {
   padding: 10px;
   border-left: 2px solid rgb(66, 66, 66);
 }
-.dlt {
-  display: flex;
-  align-items: center;
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+  .pcard-2 {
+    flex-direction: column;
+    align-items: flex-start;
+    width:auto;
+    margin: 15px;
+    padding: 15px;
+  }
+
+  .pcard-content-2 {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .pcard-text-2 {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 0;
+    font-size: 18px;
+  }
+
+  .pcard-element-2 {
+    padding: 10px 0;
+    border-left: none;
+    border-bottom: 1px solid rgb(66, 66, 66);
+    width: 100%;
+  }
+
+  .patphoto-2 {
+    height: 50px;
+    margin-bottom: 10px;
+  }
+
+  .dlt-2 {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
+
 .tryr{ 
   font-size: 30px;
   font-weight: bold;
-  margin:30px;
+  margin: 30px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .patient-block{
-  position:relative;
+  position: relative;
+  padding: 20px; /* Added padding for mobile */
+  margin-left:70px
 }
 .pat-ient{
-  display:inline-block;
+  display: inline-block;
+  width: 100%; /* Make it take full width on mobile */
 }
 .pay-ment{
-  display:inline-block;
-  position:absolute;
-  left:60%;
-  top:25%;
+  display: inline-block;
+  position: absolute;
+  left: 60%;
+  top: 25%;
   background-color: white;
   border: 1px solid #a4a4a4;
-  width:400px;
-  height:350px;
+  width: 400px;
+  height: 350px;
   border-radius: 15px;
   box-shadow: 3px 3px 5px -1px #c4c4c4;
-  font-family: inter;
+  font-family: Inter;
 }
+
 .payment-title{
-  margin:20px;
-  margin-left:25px;
+  margin: 20px;
+  margin-left: 25px;
   font-weight: bold;
   font-family: Inter;
   font-size: 25px;
 }
+
 .payment-content-left{
   display: inline-block;
   margin-left: 25px;
   font-size: 20px;
-
 }
+
 .payment-content-right{
   display: inline-block;
-  margin-left:25px;
-  margin-right:20px;
+  margin-left: 25px;
+  margin-right: 20px;
   font-size: 20px;
 }
+
 .payment-button{
-  margin:20px 21.7%;
+  margin: 20px 21.7%;
 }
+
 .patient-plan-container {
   display: block;
   padding: 20px;
@@ -773,6 +894,50 @@ input:focus::placeholder {
   background-color: #fcfcfc;
   border-radius: 15px;
   box-shadow: 3px 3px 5px -1px #c4c4c4;
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 1150px) {
+  .tryr {
+    font-size: 24px;
+    margin: 20px;
+  }
+  
+  .patient-card-block{
+    margin:auto 20%;
+  }
+  
+  .pay-ment {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    box-shadow: none;
+  }
+  
+  .payment-title {
+    font-size: 20px;
+    margin: 15px;
+  }
+  
+  .payment-content-left, 
+  .payment-content-right {
+    font-size: 16px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  
+  .payment-button {
+    margin: 15px auto;
+    text-align: center;
+  }
+  
+  .patient-plan-container {
+    margin: 10px 0;
+    padding: 15px;
+  }
 }
 
 .patient-plan-card-title {
@@ -863,8 +1028,7 @@ input:focus::placeholder {
   }
 
   .lkjh {
-    font-size: 30px;
-    text-align: center;
-    margin: 20px;
+    font-size: 35px;
+    margin-top: 60px;
   }
 }

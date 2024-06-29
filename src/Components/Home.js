@@ -3,9 +3,27 @@ import Hero from "./Hero";
 import axios from "axios";
 import PlanCard from "./PlanCard";
 import { CircularProgress } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const Home = ({ loginStatus, user }) => {
   const [plans, setPlans] = useState();
+  const [open, setOpen]=useState(false);
+  useEffect(() => {
+    const showSnackbar = sessionStorage.getItem("showSnackbar");
+    if (showSnackbar) {
+      setOpen(true);
+      sessionStorage.removeItem("showSnackbar");
+    }
+  }, []);
+  
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -35,6 +53,18 @@ const Home = ({ loginStatus, user }) => {
       <div className="container">
         <div className="plan-container">{plansHtml}</div>
       </div>
+      <div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          You are Logged In Successfully!!
+        </Alert>
+      </Snackbar>
+    </div>
     </>
   );
 };

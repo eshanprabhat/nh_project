@@ -4,12 +4,12 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 dotenv.config({ path: "./config.env" });
+const userRouter = require("./routes/userRoutes");
+const patientRouter = require("./routes/patientRoutes");
+const planRouter = require("./routes/planRoutes");
+const patientPlanRouter = require("./routes/patientPlanRoutes");
 const app = express();
 const PORT = process.env.PORT || 8000;
-const Users = require("./models/UserModel");
-const Plans = require("./models/PlanModel");
-const Patients = require("./models/PatientModel");
-const PatientPlans = require("./models/PatientPlansModel");
 const shortid =require("shortid");
 const Razorpay = require("razorpay");
 const path = require("path");
@@ -36,205 +36,12 @@ mongoose
     console.log("DB Connection Successful");
   });
 
-// Load users from the JSON file
-app.get("/api/users", async (req, res) => {
-  const users = await Users.find();
-  res.status(200).json({
-    status: "success",
-    data: {
-      users,
-    },
-  });
-});
 
-app.get("/api/plans", async (req, res) => {
-  const plans = await Plans.find();
-  res.status(200).json({
-    status: "success",
-    data: {
-      plans,
-    },
-  });
-});
+app.use("/api/users",userRouter);
+app.use("/api/patients",patientRouter);
+app.use("/api/plans",planRouter);
+app.use("/api/patient-plans",patientPlanRouter);
 
-app.post("/api/plans", async (req, res) => {
-  try {
-    // Destructure fields from req.body
-    const {
-      plan_name,
-      price,
-      tagline,
-      description,
-      features,
-      features_info,
-      created_on,
-    } = req.body;
-
-    // Validate required fields
-    if (
-      !plan_name ||
-      !price ||
-      !tagline ||
-      !description ||
-      !features ||
-      !features_info ||
-      !created_on
-    ) {
-      throw new Error("All fields are required.");
-    }
-
-    // Create new plan
-    const newPlan = await Plans.create({
-      plan_name,
-      price,
-      tagline,
-      description,
-      features,
-      features_info,
-      created_on,
-    });
-
-    // Send success response
-    res.status(201).json({
-      status: "success",
-      data: {
-        plan: newPlan,
-      },
-    });
-  } catch (error) {
-    console.error("Error: ", error); // Log error for debugging
-    res.status(400).json({
-      status: "fail",
-      message: error.message, // Send error message to client
-    });
-  }
-});
-
-// Endpoint for user signup
-app.post("/api/users", async (req, res) => {
-  try {
-    // Log the request body for debugging
-    const newUser = await Users.create(req.body);
-    res.status(201).json({
-      status: "success",
-      data: {
-        user: newUser, // Corrected key from 'tour' to 'user'
-      },
-    });
-  } catch (error) {
-    console.error("Error: ", error); // Log the error for debugging
-    res.status(400).json({
-      status: "fail",
-      message: error.message, // Send error message to the client
-    });
-  }
-});
-
-app.post("/api/patients", async (req, res) => {
-  try {
-    const { user_id, name, gender, email, dob, address, Reg_date, Active } =
-      req.body;
-
-    const newPatient = await Patients.create({
-      user_id,
-      name,
-      gender,
-      email,
-      dob,
-      address,
-      Reg_date,
-      Active,
-      show: true,
-    });
-    res.status(201).json({
-      status: "success",
-      data: {
-        patient: newPatient, // Corrected key from 'tour' to 'user'
-      },
-    });
-  } catch (error) {
-    console.error("Error: ", error); // Log the error for debugging
-    res.status(400).json({
-      status: "fail",
-      message: error.message, // Send error message to the client
-    });
-  }
-});
-
-app.get("/api/patients/user/:userId", async(req, res) => {
-  try{
-  const userId = req.params.userId;
-  const patients = await Patients.find({
-    user_id: userId,
-    show:true
-  });
-  res.status(200).json({
-    status: "success",
-    results: patients.length,
-    data: {
-      patients,
-    },
-  });
-  }catch(error){
-    res.status(404).json({
-      status:"fail",
-      message:error
-    })
-  }
-});
-
-
-app.get("/api/patients/:id", async (req, res) => {
-  try{
-    const patient= await Patients.findById(req.params.id);
-    res.status(200).json({
-      status:"success",
-      data:{
-        patient,
-      }
-    })
-  }catch(error){
-    res.status(404).json({
-      status:"fail",
-      message:error
-    })
-  }
-});
-app.get("/api/plans/:id", async (req, res) => {
-  try{
-    const plan= await Plans.findById(req.params.id);
-    res.status(200).json({
-      status:"success",
-      data:{
-        plan,
-      }
-    })
-  }catch(error){
-    res.status(404).json({
-      status:"fail",
-      message:error
-    })
-  }
-});
-
-app.delete("/api/patients/:id", async(req, res) => {
-  try{
-    await Patients.findByIdAndUpdate(req.params.id,{show:false},{
-      new:true,
-      runValidators:true
-    })
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-
-  }catch(error){
-    res.status(404).json({
-      status:"fail",
-      message:error,
-    })
-  }
-});
 
 app.get("/logo.jpg", (req, res) => {
   res.sendFile(path.join(__dirname, "src", "Components", "Images", "Narayana_Health_Logo.jpg"));
@@ -268,54 +75,6 @@ app.post("/razorpay", async (req, res) => {
   }
 });
 
-app.post("/api/patient-plans", async (req, res) => {
-  try {
-      const newPatientPlan = await PatientPlans.create(req.body);
-      res.status(201).json({
-          status: "success",
-          data: {
-              newPatientPlan,
-          },
-      });
-  } catch (error) {
-      console.error("Error in /api/patient-plans:", error); // Log the error for debugging
-      res.status(400).json({
-          status: "fail",
-          message: error.message,
-      });
-  }
-});
-
-app.get("/api/patient-plans", async (req, res) => {
-  const patientPlans = await PatientPlans.find();
-  res.status(200).json({
-    status: "success",
-    data: {
-      patientPlans,
-    },
-  });
-});
-
-app.get("/api/patient-plans/user/:userId", async(req, res) => {
-  try{
-  const userId = req.params.userId;
-  const patientPlans = await PatientPlans.find({
-    user_id: userId,
-  });
-  res.status(200).json({
-    status: "success",
-    results: patientPlans.length,
-    data: {
-      patientPlans,
-    },
-  });
-  }catch(error){
-    res.status(404).json({
-      status:"fail",
-      message:error
-    })
-  }
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

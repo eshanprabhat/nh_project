@@ -16,6 +16,7 @@ import MyPlans from "./Components/AccountInfo/MyPlans";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
   const [user,setUser]=useState();
   const loadScript =(src)=>{
     return new Promise((resolve)=>{
@@ -69,7 +70,10 @@ function App() {
           element={
             <Account
               loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
               user={user}
+              showLogout={showLogout}
+              setShowLogout={setShowLogout}
             />
           }
         />
