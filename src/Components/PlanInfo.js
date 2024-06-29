@@ -21,7 +21,7 @@ const PlanInfo = ({ loginStatus, user }) => {
     if(loginStatus){
       navigate("/plan-patient", { state: { plan } });
     }else{
-      navigate("/login");
+      navigate("/login",{state:{ plan }});
     }
   };
 

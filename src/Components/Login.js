@@ -4,13 +4,14 @@ import one from "./Images/Screenshot 2024-05-30 at 3.27.15 PM.png";
 import two from "./Images/download.png";
 import three from "./Images/Firefly Health Insurance 65632.jpg";
 import logo from "./Images/Narayana_Health_Logo.jpg";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import OtpInput from "otp-input-react";
 import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase";
 import axios from "axios";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
 
 
 const Login = ({ setLoginStatus, setUser }) => {
@@ -20,7 +21,8 @@ const Login = ({ setLoginStatus, setUser }) => {
   const [otp, setOTP] = useState("");
   const [showOTP, setShowOTP] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState(null);
-
+  const location = useLocation();
+  const { plan } = location.state || {};
   useEffect(() => {
     const fetchUsers = async () => {
       const response = await axios.get("http://localhost:8000/api/users");
@@ -112,10 +114,16 @@ const Login = ({ setLoginStatus, setUser }) => {
           console.log("User signed in successfully:", user);
           setLoginStatus(true);
           setUser(myUser);
-          navigate("/");
+          sessionStorage.setItem("showSnackbar", "true");
+          if(plan){
+            navigate("/plan-patient",{state:{plan}});
+          }else{
+            navigate("/");
+          }
         })
         .catch((error) => {
           console.log("OTP verification failed", error);
+          alert("Invalid OTP!");
         });
     }
   };
