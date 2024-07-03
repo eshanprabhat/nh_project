@@ -15,9 +15,7 @@ import PatientPlans from "./Components/PatientPlans";
 import MyPlans from "./Components/AccountInfo/MyPlans";
 
 function App() {
-  const [loginStatus, setLoginStatus] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-  const [user,setUser]=useState();
   const loadScript =(src)=>{
     return new Promise((resolve)=>{
       const script = document.createElement('script');
@@ -42,36 +40,27 @@ function App() {
         <Route
           path="/"
           element={
-            <Home
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <Home />
           }
         />
         <Route
           path="/about"
           element={
-            <About
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <About />
           }
         />
         <Route
           path="/login"
-          element={<Login setLoginStatus={setLoginStatus} setUser={setUser}/>}
+          element={<Login />}
         />
         <Route
           path="/signup"
-          element={<Signup setLoginStatus={setLoginStatus} setUser={setUser} />}
+          element={<Signup />}
         />
         <Route
           path="/account-info"
           element={
             <Account
-              loginStatus={loginStatus}
-              setLoginStatus={setLoginStatus}
-              user={user}
               showLogout={showLogout}
               setShowLogout={setShowLogout}
             />
@@ -80,64 +69,43 @@ function App() {
         <Route
           path="/account-details"
           element={
-            <AccountDetails
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <AccountDetails />
           }
         />
         <Route
           path="/add-patient"
           element={
-            <AddPatient
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <AddPatient  />
           }
         />
         <Route
           path="/my-plans"
           element={
-            <MyPlans
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <MyPlans  />
           }
         />
         <Route
           path="/patient-list"
           element={
-            <PatientList
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <PatientList  />
           }
         />
         <Route
           path="/patient-info"
           element={
-            <PatientInfo
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <PatientInfo  />
           }
         />
         <Route
           path="/plan-info"
           element={
-            <PlanInfo
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <PlanInfo />
           }
         />
         <Route
           path="/plan-patient"
           element={
-            <PatientPlans
-              loginStatus={loginStatus}
-              user={user}
-            />
+            <PatientPlans />
           }
         />
       </Routes>

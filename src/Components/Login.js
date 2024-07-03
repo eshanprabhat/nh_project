@@ -12,9 +12,7 @@ import { auth } from "../firebase";
 import axios from "axios";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
-
-
-const Login = ({ setLoginStatus, setUser }) => {
+const Login = () => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [users, setUsers] = useState([]);
@@ -112,9 +110,9 @@ const Login = ({ setLoginStatus, setUser }) => {
         .then((result) => {
           const user = result.user;
           console.log("User signed in successfully:", user);
-          setLoginStatus(true);
-          setUser(myUser);
           sessionStorage.setItem("showSnackbar", "true");
+          sessionStorage.setItem("loginStatus", "true");
+          sessionStorage.setItem("user", JSON.stringify(myUser));
           if(plan){
             navigate("/plan-patient",{state:{plan}});
           }else{

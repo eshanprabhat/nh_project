@@ -7,10 +7,19 @@ import { Button } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import displayRazorPay from "../utils/PaymentGateway";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
-const PatientPlans = ({ loginStatus, user }) => {
+const PatientPlans = () => {
   const navigate = useNavigate();
-
+  const [loginStatus, setLoginStatus] = useState(null);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const loginStatus = sessionStorage.getItem("loginStatus");
+    setLoginStatus(loginStatus);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  }, []);
   useEffect(() => {
     if (loginStatus === false) {
       navigate("/");
@@ -26,6 +35,14 @@ const PatientPlans = ({ loginStatus, user }) => {
   const [price, setPrice] = useState(plan.price);
   const [tax, setTax] = useState(price * 0.18);
   const [total, setTotal] = useState(price + tax - 500);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const showSnackbar = sessionStorage.getItem("showSnackbar");
+    if (showSnackbar) {
+      setOpen(true);
+      sessionStorage.removeItem("showSnackbar");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -47,7 +64,13 @@ const PatientPlans = ({ loginStatus, user }) => {
   const handleEmptyClick = () => {
     navigate("/add-patient", { state: { plan } });
   };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
+    setOpen(false);
+  };
   useEffect(() => {
     setShowPayment(selectedPatients.length > 0);
     setPrice(plan.price * selectedPatients.length);
@@ -87,7 +110,7 @@ const PatientPlans = ({ loginStatus, user }) => {
         loginStatus={loginStatus}
         user={user}
       />
-      <div style={{ padding: "60px" }} />
+      <div style={{padding:"42px"}} />
       <div className="patient-block">
         <div className="pat-ient">
           <div className="tryr">Select Patients</div>
@@ -95,7 +118,7 @@ const PatientPlans = ({ loginStatus, user }) => {
             {resultsHTML}
             <Button
               onClick={handleEmptyClick}
-              style={{"margin-left":"190px", padding: "15px" }}
+              style={{ "margin-left": "190px", padding: "15px" }}
               variant="contained"
               color="success"
             >
@@ -147,6 +170,18 @@ const PatientPlans = ({ loginStatus, user }) => {
             </div>
           </>
         )}
+      </div>
+      <div>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            You are Logged In Successfully!!
+          </Alert>
+        </Snackbar>
       </div>
     </>
   );

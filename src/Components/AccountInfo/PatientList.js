@@ -5,17 +5,22 @@ import { useEffect } from "react";
 import { useState } from "react";
 import PatientCard from "./PatientInfo/PatientCard";
 import { Button } from "@mui/material";
-const PatientList = ({
-  loginStatus,
-  user
-}) => {
+const PatientList = () => {
+  const [loginStatus, setLoginStatus] = useState(null);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const loginStatus = sessionStorage.getItem("loginStatus");
+    setLoginStatus(loginStatus);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  }, []);
   const navigate = useNavigate();
-    useEffect(()=>{
-      if (loginStatus===false){
-        navigate("/");
-        window.location.reload();
-      }
-    },[loginStatus, navigate]);
+  useEffect(() => {
+    if (loginStatus === false) {
+      navigate("/");
+      window.location.reload();
+    }
+  }, [loginStatus, navigate]);
   const [patientsList, setPatientsList] = useState([]);
   useEffect(() => {
     const fetchPatients = async () => {
@@ -33,11 +38,13 @@ const PatientList = ({
     };
     fetchPatients();
   }, [user]);
-  const handleEmptyClick =()=>{
+  const handleEmptyClick = () => {
     navigate("/add-patient");
-  }
+  };
   const handleDelete = (deletedPatientId) => {
-    setPatientsList(patientsList.filter(patient => patient._id !== deletedPatientId));
+    setPatientsList(
+      patientsList.filter((patient) => patient._id !== deletedPatientId)
+    );
   };
   if (!user) {
     return <p>User not found</p>;
@@ -46,23 +53,32 @@ const PatientList = ({
   let resultsHTML = null;
   if (patientsList.length > 0) {
     resultsHTML = patientsList.map((patient, i) => {
-        return <PatientCard user={user} patient={patient} key={i} onDelete={handleDelete}/>;
+      return (
+        <PatientCard
+          user={user}
+          patient={patient}
+          key={i}
+          onDelete={handleDelete}
+        />
+      );
     });
   } else {
-    resultsHTML = (<div>
-    <div style={{"font-family":"Inter", "font-size":"30px"}}>No Patient Found</div>
-    <div style={{padding:"10px"}}></div>
-    <Button onClick={handleEmptyClick} className="mx-4" variant="contained">Add Patient</Button>
-    </div>);
+    resultsHTML = (
+      <div>
+        <div style={{ "font-family": "Inter", "font-size": "30px" }}>
+          No Patient Found
+        </div>
+        <div style={{ padding: "10px" }}></div>
+        <Button onClick={handleEmptyClick} className="mx-4" variant="contained">
+          Add Patient
+        </Button>
+      </div>
+    );
   }
   return (
     <>
-      <Hero
-        text="Patient List"
-        loginStatus={loginStatus}
-        user={user}
-      />
-      <div style={{ padding: "60px" }}></div>
+      <Hero text="Patient List" loginStatus={loginStatus} user={user} />
+      <div style={{padding:"42px"}} />
       <div className="d-flex justify-content-center">
         <div>{resultsHTML}</div>
       </div>

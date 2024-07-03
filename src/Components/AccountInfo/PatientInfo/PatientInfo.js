@@ -1,22 +1,27 @@
 import Hero from "../../Hero";
 import { useState, useEffect } from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import one from "../../Images/Unknown6.png";
 import two from "../../Images/Untitled design.png";
 import { CircularProgress } from "@mui/material";
 
-const PatientInfo = ({
-  loginStatus,
-  user
-}) => {
+const PatientInfo = () => {
+  const [loginStatus, setLoginStatus] = useState(null);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const loginStatus = sessionStorage.getItem("loginStatus");
+    setLoginStatus(loginStatus);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  }, []);
   const navigate = useNavigate();
-    useEffect(()=>{
-      if (loginStatus===false){
-        navigate("/");
-        window.location.reload();
-      }
-    },[loginStatus, navigate]);
+  useEffect(() => {
+    if (loginStatus === false) {
+      navigate("/");
+      window.location.reload();
+    }
+  }, [loginStatus, navigate]);
   const location = useLocation();
   const { id } = location.state || {};
   const [patient, setPatient] = useState();
@@ -57,12 +62,8 @@ const PatientInfo = ({
 
   return (
     <>
-      <Hero
-        text="Patient List"
-        loginStatus={loginStatus}
-        user={user}
-      />
-      <div style={{padding:"60px"}} />
+      <Hero text="Patient List" loginStatus={loginStatus} user={user} />
+      <div style={{ padding: "60px" }} />
       <div>
         {patient ? (
           <>
@@ -81,7 +82,9 @@ const PatientInfo = ({
             </div>
           </>
         ) : (
-          <div style={{margin:"auto 50%"}}><CircularProgress /></div>
+          <div style={{ margin: "auto 50%" }}>
+            <CircularProgress />
+          </div>
         )}
       </div>
     </>

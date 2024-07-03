@@ -4,14 +4,16 @@ import one from "./Images/Screenshot 2024-05-30 at 3.27.15 PM.png";
 import three from "./Images/Firefly Health Insurance 65632.jpg";
 import two from "./Images/download.png";
 import logo from "./Images/Narayana_Health_Logo.jpg";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link,useLocation } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import OtpInput from "otp-input-react";
 import { auth } from "../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import axios from "axios";
 
-const Signup = ({ setLoginStatus, setUser}) => {
+const Signup = () => {
+  const location = useLocation();
+  const { plan } = location.state || {};
   const [mobileNumber, setmobileNumber] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -75,7 +77,6 @@ const Signup = ({ setLoginStatus, setUser}) => {
         const result = await confirmationResult.confirm(otp);
         const user = result.user;
         console.log("User signed in successfully", user);
-        setLoginStatus(true);
         const phoneNumber = `+${mobileNumber}`;
         const date = new Date();
         const response = await axios.post("http://localhost:8000/api/users", {
@@ -84,9 +85,14 @@ const Signup = ({ setLoginStatus, setUser}) => {
           email,
           date,
         });
-        setUser(response.data.data.user);
-        navigate("/");
-        alert("User signed up successfully");
+        sessionStorage.setItem("showSnackbar", "true");
+        sessionStorage.setItem("loginStatus", "true");
+        sessionStorage.setItem("user", response.data.data.user);
+        if(plan){
+          navigate("/plan-patient",{state:{plan}});
+        }else{
+          navigate("/");
+        }
       } catch (error) {
         console.error("OTP verification failed", error);
         alert("Invalid OTP!");
@@ -178,8 +184,7 @@ const Signup = ({ setLoginStatus, setUser}) => {
       </div>
       <div className="second">
         <img src={second} alt="" />
-
-        <div className="container text-center erty">
+        <div className="text-center erty">
           <div className="row">
             <div className="col one">
               <img src={one} alt="one" />

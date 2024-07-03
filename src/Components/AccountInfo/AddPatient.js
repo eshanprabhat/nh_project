@@ -19,11 +19,16 @@ import FormControl from '@mui/material/FormControl';
 
 dayjs.extend(localizedFormat);
 
-const AddPatient = ({
-  loginStatus,
-  user
-}) => {
+const AddPatient = () => {
   const navigate = useNavigate();
+  const [loginStatus, setLoginStatus]=useState(null);
+  const [user, setUser]=useState(null);
+  useEffect(()=>{
+    const loginStatus = sessionStorage.getItem("loginStatus");
+    setLoginStatus(loginStatus);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  },[])
     useEffect(()=>{
       if (loginStatus===false){
         navigate("/");
@@ -112,7 +117,7 @@ const AddPatient = ({
         loginStatus={loginStatus}
         user={user}
       />
-      <div style={{ padding: "60px" }} />
+      <div style={{padding:"42px"}} />
       <div className="add-patient">
         {alert && (<>
           <Alert variant="filled" severity={alert.severity}>

@@ -4,46 +4,47 @@ import Hero from "../Hero";
 import axios from "axios";
 import PatientPlansCard from "../../utils/PatientPlanCard";
 
-
-const MyPlans = ({
-    loginStatus,
-    user
-  })=>{
-    const navigate = useNavigate();
-    useEffect(()=>{
-      if (loginStatus===false){
-        navigate("/");
-        window.location.reload();
+const MyPlans = () => {
+  const navigate = useNavigate();
+  const [loginStatus, setLoginStatus] = useState(null);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const loginStatus = sessionStorage.getItem("loginStatus");
+    setLoginStatus(loginStatus);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  }, []);
+  useEffect(() => {
+    if (loginStatus === false) {
+      navigate("/");
+      window.location.reload();
+    }
+  }, [loginStatus, navigate]);
+  const [patientPlanList, setPatientPlansList] = useState([]);
+  useEffect(() => {
+    const fetchPatientPlans = async () => {
+      try {
+        const userId = user._id;
+        const response = await axios.get(
+          `http://localhost:8000/api/patient-plans/user/${userId}`
+        );
+        setPatientPlansList(response.data.data.patientPlans);
+      } catch (error) {
+        console.log("Error Fetching Your Plans");
       }
-    },[loginStatus, navigate]);
-    const [patientPlanList, setPatientPlansList]=useState([]);
-    useEffect(()=>{
-      const fetchPatientPlans=async()=>{
-        try{
-          const userId = user._id;
-          const response= await axios.get(`http://localhost:8000/api/patient-plans/user/${userId}`);
-          setPatientPlansList(response.data.data.patientPlans);
-        }catch(error){
-          console.log("Error Fetching Your Plans")
-        }
-      }
-      fetchPatientPlans();
-    },[user])
-    let resultsPatientPlan = null;
-    resultsPatientPlan = patientPlanList.map((p,i)=>{
-      return <PatientPlansCard p={p}  key={i} />
-    })
-return(
+    };
+    fetchPatientPlans();
+  }, [user]);
+  let resultsPatientPlan = null;
+  resultsPatientPlan = patientPlanList.map((p, i) => {
+    return <PatientPlansCard p={p} key={i} />;
+  });
+  return (
     <>
-    <Hero
-        text="My Plans"
-        loginStatus={loginStatus}
-        user={user}
-      />
-      <div style={{padding:"60px"}} />
+      <Hero text="My Plans" loginStatus={loginStatus} user={user} />
+      <div style={{padding:"42px"}} />
       <div>{resultsPatientPlan}</div>
-
     </>
-)
-}
+  );
+};
 export default MyPlans;

@@ -32,6 +32,8 @@ export default function RightTemporaryDrawer({ loginStatus }) {
     navigate("/signup");
   };
   const handleLogOutClick = () => {
+    sessionStorage.removeItem("loginStatus");
+    sessionStorage.removeItem("user");
     navigate("/");
     window.location.reload();
   };

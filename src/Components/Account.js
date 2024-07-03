@@ -8,24 +8,27 @@ import fourth from "./Images/Unknown4.png";
 import React, { useRef } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import Footer from "../utils/Footer";
 
 
 const Account = ({
-  loginStatus, 
-  setLoginStatus,
   setShowLogout,
   showLogout,
-  user
 }) => {
   setShowLogout(true)
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const [loginStatus, setLoginStatus]=useState(null);
+  const [user, setUser]=useState(null);
   const [myUser, setMyUser]=useState(null);
+  useEffect(()=>{
+    const loginStatus = sessionStorage.getItem("loginStatus");
+    setLoginStatus(loginStatus);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  },[])
   useEffect(() => {
-    if (loginStatus === false) {
-      navigate("/");
-      window.location.reload();
-    } else {
+    if (user && user._id) { // Ensure user and user._id are not null before making the request
       const fetchUser = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/api/users/${user._id}`);
@@ -36,7 +39,7 @@ const Account = ({
       };
       fetchUser();
     }
-  }, [loginStatus, navigate, user._id]);
+  }, [loginStatus, navigate, user]);
   const clickAccoutDetails = () => {
     navigate("/account-details");
   };
@@ -90,8 +93,8 @@ const Account = ({
         setShowLogout={setShowLogout}
         user={myUser}
       />
+        <div style={{padding:"60px"}} />
       <div className="account-links">
-        <div style={{padding:"40px"}} />
         <img className="image-1" src={require(`../images/users/${myUser.photo}`)} alt="avatar" onClick={handlePhotoClick}/>
         <input
           type="file"
@@ -118,6 +121,8 @@ const Account = ({
           Add Patients
         </div>
       </div>
+      <div style={{padding:"60px"}} />
+      <Footer />
     </>
   );
 };
