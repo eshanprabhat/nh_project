@@ -1,5 +1,5 @@
 import logo from "./Images/Narayana_Health_Logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
@@ -8,6 +8,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import defaultAvatar from "./Images/Unknown6.png";
+import axios from "axios";
 
 const Hero = ({
   user,
@@ -21,6 +22,7 @@ const Hero = ({
   contactRef,
 }) => {
   const navigate = useNavigate();
+  const [myUser, setMyUser]=useState(null);
   const handleLogoClick = () => {
     navigate("/");
     setTimeout(() => {
@@ -31,7 +33,19 @@ const Hero = ({
     }, 100);
   };
   const [anchorEl, setAnchorEl] = useState(null);
-
+  useEffect(()=>{
+    if (user && user._id) { // Ensure user and user._id are not null before making the request
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8000/api/users/${user._id}`);
+          setMyUser(response.data.data.user);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      fetchUser();
+    }
+  })
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -187,7 +201,7 @@ const Hero = ({
                   >
                     <Avatar
                       alt="avatar"
-                      src={user && user.photo ? require(`../images/users/${user.photo}`) : defaultAvatar}
+                      src={myUser && myUser.photo ? require(`../images/users/${myUser.photo}`) : defaultAvatar}
                       onClick={handleAccountClick}
                       onMouseEnter={handlePopoverOpen}
                       onMouseLeave={handlePopoverClose}
