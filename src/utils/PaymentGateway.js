@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function displayRazorPay(total, user, selectedPatients, plan, navigate) {
     try {
-        const response = await fetch("http://localhost:8000/razorpay", {
+        const response = await fetch("https://nh-project.onrender.com/razorpay", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -16,7 +16,7 @@ export default async function displayRazorPay(total, user, selectedPatients, pla
             const expiry = new Date();
             expiry.setFullYear(today.getFullYear() + 1);
             try {
-                const response = await axios.post("http://localhost:8000/api/patient-plans", {
+                const response = await axios.post("https://nh-project.onrender.com/api/patient-plans", {
                     user_id: user._id,
                     plan: plan,
                     selectedPatients,
@@ -39,7 +39,7 @@ export default async function displayRazorPay(total, user, selectedPatients, pla
             currency: data.currency,
             amount: data.amount,
             description: "Health Insurance",
-            image: "http://localhost:8000/logo.jpg",
+            image: "https://nh-project.onrender.com/logo.jpg",
             order_id: data.id,
             handler: function (response) {
                 actionSubmit(response);

@@ -46,7 +46,7 @@ const PatientCard = ({ myUser, patient , onDelete}) => {
   const handleDeleteClick = async () => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/patients/${patient._id}`
+        `https://nh-project.onrender.com/api/patients/${patient._id}`
       );
       onDelete(patient._id);
       handleClose();

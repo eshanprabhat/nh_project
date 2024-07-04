@@ -23,7 +23,7 @@ const Login = () => {
   const { plan } = location.state || {};
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await axios.get("http://localhost:8000/api/users");
+      const response = await axios.get("https://nh-project.onrender.com/api/users");
       setUsers(response.data.data.users);
     };
     fetchUsers();

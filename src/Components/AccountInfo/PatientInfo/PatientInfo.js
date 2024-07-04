@@ -30,7 +30,7 @@ const PatientInfo = () => {
     const getPatient = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/patients/${id}`
+          `https://nh-project.onrender.com/api/patients/${id}`
         );
         setPatient(response.data.data.patient);
       } catch (error) {

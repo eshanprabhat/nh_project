@@ -21,7 +21,7 @@ useEffect(()=>{
       if (user && user._id){
       const fetchUser = async () => {
         try {
-          const response = await axios.get(`http://localhost:8000/api/users/${user._id}`);
+          const response = await axios.get(`https://nh-project.onrender.com/api/users/${user._id}`);
           setMyUser(response.data.data.user);
         } catch (error) {
           console.error("Error fetching user data:", error);

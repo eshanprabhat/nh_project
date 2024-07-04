@@ -79,7 +79,7 @@ const Signup = () => {
         console.log("User signed in successfully", user);
         const phoneNumber = `+${mobileNumber}`;
         const date = new Date();
-        const response = await axios.post("http://localhost:8000/api/users", {
+        const response = await axios.post("https://nh-project.onrender.com/api/users", {
           name,
           phoneNumber,
           email,

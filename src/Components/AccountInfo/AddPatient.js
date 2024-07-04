@@ -74,7 +74,7 @@ const AddPatient = () => {
     const Reg_date = new Date();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/patients", {
+      const response = await axios.post("https://nh-project.onrender.com/api/patients", {
         user_id,
         name,
         gender,

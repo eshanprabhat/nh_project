@@ -28,7 +28,7 @@ const PatientList = () => {
         try {
           const user_id = user._id;
           const response = await axios.get(
-            `http://localhost:8000/api/patients/user/${user_id}`
+            `https://nh-project.onrender.com/api/patients/user/${user_id}`
           );
           setPatientsList(response.data.data.patients);
         } catch (error) {

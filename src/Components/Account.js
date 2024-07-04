@@ -9,6 +9,7 @@ import React, { useRef } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import Footer from "../utils/Footer";
+import avatarphoto from "./Images/user-member-avatar-face-profile-icon-vector-22965342.jpg";
 
 
 const Account = ({
@@ -31,7 +32,7 @@ const Account = ({
     if (user && user._id) { // Ensure user and user._id are not null before making the request
       const fetchUser = async () => {
         try {
-          const response = await axios.get(`http://localhost:8000/api/users/${user._id}`);
+          const response = await axios.get(`https://nh-project.onrender.com/api/users/${user._id}`);
           setMyUser(response.data.data.user);
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -65,7 +66,7 @@ const Account = ({
       formData.append("photo", file);
 
       // Example using fetch to upload the file
-      fetch(`http://localhost:8000/api/users/${user._id}`, {
+      fetch(`https://nh-project.onrender.com/api/users/${user._id}`, {
         method: "PATCH",
         body: formData,
       })
@@ -97,7 +98,7 @@ const Account = ({
       />
         <div style={{padding:"60px"}} />
       <div className="account-links">
-        <img className="image-1" src={require(`../images/users/${myUser.photo}`)} alt="avatar" onClick={handlePhotoClick}/>
+        <img className="image-1" src={user && user.photo ? require(`../images/users/${myUser.photo}`): avatarphoto} alt="avatar" onClick={handlePhotoClick}/>
         <input
           type="file"
           ref={fileInputRef}
