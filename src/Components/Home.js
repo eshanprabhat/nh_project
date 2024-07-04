@@ -28,6 +28,9 @@ const Home = () => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUser(user);
     setLoginStatus(loginStatus);
+    // sessionStorage.removeItem("loginStatus");
+    // sessionStorage.removeItem("user");
+   
   }, []);
 
   const handleClose = (event, reason) => {

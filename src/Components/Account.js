@@ -72,6 +72,8 @@ const Account = ({
         .then((response) => response.json())
         .then((data) => {
           console.log("File uploaded successfully:", data);
+          sessionStorage.removeItem("user");
+          sessionStorage.setItem("user",JSON.stringify(data.data.user));
           // Update the user's photo URL if necessary
         })
         .catch((error) => {
@@ -80,7 +82,7 @@ const Account = ({
     }
   };
   if (!myUser) {
-    return <CircularProgress />;
+    return <CircularProgress className="circular"/>;
   }
 
   return (

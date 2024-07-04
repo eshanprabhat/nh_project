@@ -7,6 +7,7 @@ import RightTemporaryDrawer from "./../utils/Drawer";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
+import defaultAvatar from "./Images/Unknown6.png";
 
 const Hero = ({
   user,
@@ -186,7 +187,7 @@ const Hero = ({
                   >
                     <Avatar
                       alt="avatar"
-                      src={require(`../images/users/${user.photo}`)}
+                      src={user && user.photo ? require(`../images/users/${user.photo}`).default : defaultAvatar}
                       onClick={handleAccountClick}
                       onMouseEnter={handlePopoverOpen}
                       onMouseLeave={handlePopoverClose}

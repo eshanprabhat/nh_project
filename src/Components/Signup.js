@@ -87,7 +87,7 @@ const Signup = () => {
         });
         sessionStorage.setItem("showSnackbar", "true");
         sessionStorage.setItem("loginStatus", "true");
-        sessionStorage.setItem("user", response.data.data.user);
+        sessionStorage.setItem("user", JSON.stringify(response.data.data.user));
         if(plan){
           navigate("/plan-patient",{state:{plan}});
         }else{
