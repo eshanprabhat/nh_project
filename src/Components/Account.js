@@ -9,6 +9,7 @@ import React, { useRef } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import Footer from "../utils/Footer";
+import defaultAvatar from "./Images/Unknown6.png";
 
 
 const Account = ({
@@ -97,7 +98,7 @@ const Account = ({
       />
         <div style={{padding:"60px"}} />
       <div className="account-links">
-        <img className="image-1" src={require(`../images/users/${myUser.photo}`)} alt="avatar" onClick={handlePhotoClick}/>
+        <img className="image-1" src={myUser && myUser.photo ? require(`../images/users/${myUser.photo}`) : defaultAvatar} alt="avatar" onClick={handlePhotoClick}/>
         <input
           type="file"
           ref={fileInputRef}
