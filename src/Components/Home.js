@@ -42,7 +42,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchPlans = async () => {
-      const response = await axios.get("http://localhost:8000/api/plans");
+      const response = await axios.get("https://nh-project.onrender.com/api/plans");
       setPlans(response.data.data.plans);
     };
     fetchPlans();
