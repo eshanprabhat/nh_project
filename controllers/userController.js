@@ -1,6 +1,14 @@
 const Users = require("./../models/UserModel");
 const multer = require("multer");
 const sharp = require("sharp");
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3');
+
+aws.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  region: process.env.AWS_BUCKET_REGION
+});
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -19,7 +27,9 @@ const filterObj = (obj, ...allowedFields) => {
 //     cb(null,`user-${req.params.id}-${Date.now()}.${ext}`);
 //   }
 // });
-const multerStorage = multer.memoryStorage();
+const s3 = new aws.S3();
+
+// const multerStorage = multer.memoryStorage();
 
 const multerFilter =(req,file,cb)=>{
   if(file.mimetype.startsWith('image')){
@@ -30,23 +40,41 @@ const multerFilter =(req,file,cb)=>{
 }
 
 const upload = multer({
-  storage : multerStorage,
-  fileFilter : multerFilter
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    acl: 'public-read',
+    key: function (req, file, cb) {
+      cb(null, `user-${req.params.id}-${Date.now()}.jpeg`);
+    }
+  }),
+  fileFilter: multerFilter
 });
+
 exports.uploadUserPhoto = upload.single('photo');
 
-exports.resizeUserPhoto = async(req,res,next)=>{
+exports.resizeUserPhoto = async (req, res, next) => {
   if (!req.file) return next();
-  req.file.filename = `user-${req.params.id}-${Date.now()}.jpeg`;
-
-  await sharp(req.file.buffer)
+  // You may not need to resize the image if using S3, but if you do:
+  const buffer = await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`src/images/users/${req.file.filename}`);
+    .toBuffer();
+
+    const uploadParams = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: req.file.key,
+      Body: buffer,
+      ACL: 'public-read',
+      ContentType: 'image/jpeg'
+    };
+    const result = await s3.upload(uploadParams).promise();
+
+  req.file.location = result.Location; // Location of the image in S3
 
   next();
-}
+};
 
 exports.getAllUsers=async (req, res) => {
   try{
@@ -105,7 +133,7 @@ exports.updateUser = async (req,res)=>{
   try{
     const filteredBody = filterObj(req.body, 'name', 'email');
     if (req.file) filteredBody.photo = req.file.filename;
-    const updatedUser = await Users.findByIdAndUpdate(req.params.id, filteredBody, {
+    const updatedUser = await Users.findByIdAndUpdate(req.params.id, {...filteredBody, photo:req.file.location}, {
       new: true,
       runValidators: true
     });

@@ -1,4 +1,4 @@
-const Plans = require("./../models/PlanModel");
+const Plans = require("../models/PlanModel");
 
 exports.getAllPlans = async (req, res) => {
     const plans = await Plans.find();
