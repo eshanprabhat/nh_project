@@ -100,11 +100,11 @@ exports.createUser=async (req, res) => {
       res.status(201).json({
         status: "success",
         data: {
-          user: newUser, // Corrected key from 'tour' to 'user'
+          user: newUser, 
         },
       });
     } catch (error) {
-      console.error("Error: ", error); // Log the error for debugging
+      console.error("Error: ", error);
       res.status(400).json({
         status: "fail",
         message: error.message, // Send error message to the client
