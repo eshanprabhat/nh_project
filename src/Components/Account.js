@@ -1,35 +1,32 @@
-import Hero from "./Hero";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
+import Hero from "./Hero";
+import Footer from "../utils/Footer";
 import first from "./Images/Unknown2.png";
 import second from "./Images/Screenshot 2024-05-28 at 12.58.51 PM.png";
 import third from "./Images/Unknown3.png";
 import fourth from "./Images/Unknown4.png";
-import React, { useRef } from "react";
-import axios from "axios";
-import { CircularProgress } from "@mui/material";
-import Footer from "../utils/Footer";
 import avatarphoto from "./Images/user-member-avatar-face-profile-icon-vector-22965342.jpg";
 
-
-const Account = ({
-  setShowLogout,
-  showLogout,
-}) => {
-  setShowLogout(true)
+const Account = ({ setShowLogout, showLogout }) => {
+  setShowLogout(true);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
-  const [loginStatus, setLoginStatus]=useState(null);
-  const [user, setUser]=useState(null);
-  const [myUser, setMyUser]=useState(null);
-  useEffect(()=>{
+  const [loginStatus, setLoginStatus] = useState(null);
+  const [user, setUser] = useState(null);
+  const [myUser, setMyUser] = useState(null);
+
+  useEffect(() => {
     const loginStatus = sessionStorage.getItem("loginStatus");
     setLoginStatus(loginStatus);
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUser(user);
-  },[])
+  }, []);
+
   useEffect(() => {
-    if (user && user._id) { // Ensure user and user._id are not null before making the request
+    if (user && user._id) {
       const fetchUser = async () => {
         try {
           const response = await axios.get(`https://nh-project.onrender.com/api/users/${user._id}`);
@@ -41,18 +38,23 @@ const Account = ({
       fetchUser();
     }
   }, [loginStatus, navigate, user]);
+
   const clickAccoutDetails = () => {
     navigate("/account-details");
   };
+
   const clickAddPatient = () => {
     navigate("/add-patient");
   };
+
   const clickPatientList = () => {
     navigate("/patient-list");
   };
+
   const clickMyPlans = () => {
     navigate("/my-plans");
   };
+
   const handlePhotoClick = () => {
     fileInputRef.current.click();
   };
@@ -60,12 +62,9 @@ const Account = ({
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Handle file upload logic here
-      // You can use FormData to upload the file to your server
       const formData = new FormData();
       formData.append("photo", file);
 
-      // Example using fetch to upload the file
       fetch(`https://nh-project.onrender.com/api/users/${user._id}`, {
         method: "PATCH",
         body: formData,
@@ -74,16 +73,16 @@ const Account = ({
         .then((data) => {
           console.log("File uploaded successfully:", data);
           sessionStorage.removeItem("user");
-          sessionStorage.setItem("user",JSON.stringify(data.data.user));
-          // Update the user's photo URL if necessary
+          sessionStorage.setItem("user", JSON.stringify(data.data.user));
         })
         .catch((error) => {
           console.error("Error uploading file:", error);
         });
     }
   };
+
   if (!myUser) {
-    return <CircularProgress className="circular"/>;
+    return <CircularProgress className="circular" />;
   }
 
   return (
@@ -96,9 +95,14 @@ const Account = ({
         setShowLogout={setShowLogout}
         user={myUser}
       />
-        <div style={{padding:"60px"}} />
+      <div style={{ padding: "60px" }} />
       <div className="account-links">
-        <img className="image-1" src={user && user.photo ? require(`../images/users/${myUser.photo}`): avatarphoto} alt="avatar" onClick={handlePhotoClick}/>
+        <img
+          className="image-1"
+          src={myUser.photo ? myUser.photo : avatarphoto} // Display user's photo from AWS S3 or default avatar
+          alt="avatar"
+          onClick={handlePhotoClick}
+        />
         <input
           type="file"
           ref={fileInputRef}
@@ -106,7 +110,7 @@ const Account = ({
           onChange={handleFileChange}
           accept="image/*"
         />
-        <div style={{padding:"10px"}} />
+        <div style={{ padding: "10px" }} />
         <div className="account-link" onClick={clickAccoutDetails}>
           <img className="image" src={first} alt="Account Details" />
           Account Details
@@ -124,7 +128,7 @@ const Account = ({
           Add Patients
         </div>
       </div>
-      <div style={{padding:"60px"}} />
+      <div style={{ padding: "60px" }} />
       <Footer />
     </>
   );

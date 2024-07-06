@@ -1,14 +1,66 @@
 const Users = require("./../models/UserModel");
 const multer = require("multer");
 const sharp = require("sharp");
-const aws = require('aws-sdk');
-const multerS3 = require('multer-s3');
+const { S3Client } = require('@aws-sdk/client-s3');
+const { Upload } = require('@aws-sdk/lib-storage');
 
-aws.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_ACCESS_SECRET,
-  region: process.env.AWS_BUCKET_REGION
+const s3 = new S3Client({
+  region: process.env.AWS_BUCKET_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  },
 });
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Not an image! Please upload only images.'), false);
+  }
+};
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: multerFilter
+});
+
+exports.uploadUserPhoto = upload.single('photo');
+
+exports.resizeUserPhoto = async (req, res, next) => {
+  if (!req.file) return next();
+
+  const buffer = await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toBuffer();
+
+  const uploadParams = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: `user-${req.params.id}-${Date.now()}.jpeg`,
+    Body: buffer,
+    ContentType: 'image/jpeg',
+  };
+
+  try {
+    const upload = new Upload({
+      client: s3,
+      params: uploadParams,
+    });
+
+    const result = await upload.done();
+    req.file.location = result.Location;
+
+    next();
+  } catch (error) {
+    console.error('Error uploading file to S3:', error);
+    res.status(500).json({
+      status: 'fail',
+      message: 'Error uploading file to S3',
+    });
+  }
+};
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -18,66 +70,8 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-// const multerStorage = multer.diskStorage({
-//   destination: (req,file,cb)=>{
-//     cb(null,'src/images/users');
-//   },
-//   filename: (req,file,cb)=>{
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null,`user-${req.params.id}-${Date.now()}.${ext}`);
-//   }
-// });
-const s3 = new aws.S3();
-
-// const multerStorage = multer.memoryStorage();
-
-const multerFilter =(req,file,cb)=>{
-  if(file.mimetype.startsWith('image')){
-    cb(null,true)
-  }else{
-    cb(new Error('Not an image! Please upload only images.'),false)
-  }
-}
-
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.AWS_BUCKET_NAME,
-    acl: 'public-read',
-    key: function (req, file, cb) {
-      cb(null, `user-${req.params.id}-${Date.now()}.jpeg`);
-    }
-  }),
-  fileFilter: multerFilter
-});
-
-exports.uploadUserPhoto = upload.single('photo');
-
-exports.resizeUserPhoto = async (req, res, next) => {
-  if (!req.file) return next();
-  // You may not need to resize the image if using S3, but if you do:
-  const buffer = await sharp(req.file.buffer)
-    .resize(500, 500)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toBuffer();
-
-    const uploadParams = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: req.file.key,
-      Body: buffer,
-      ACL: 'public-read',
-      ContentType: 'image/jpeg'
-    };
-    const result = await s3.upload(uploadParams).promise();
-
-  req.file.location = result.Location; // Location of the image in S3
-
-  next();
-};
-
-exports.getAllUsers=async (req, res) => {
-  try{
+exports.getAllUsers = async (req, res) => {
+  try {
     const users = await Users.find();
     res.status(200).json({
       status: "success",
@@ -85,7 +79,7 @@ exports.getAllUsers=async (req, res) => {
         users,
       },
     });
-  }catch(error){
+  } catch (error) {
     res.status(400).json({
       status: "fail",
       message: error.message,
@@ -93,27 +87,26 @@ exports.getAllUsers=async (req, res) => {
   }
 };
 
-exports.createUser=async (req, res) => {
-    try {
-      // Log the request body for debugging
-      const newUser = await Users.create(req.body);
-      res.status(201).json({
-        status: "success",
-        data: {
-          user: newUser, 
-        },
-      });
-    } catch (error) {
-      console.error("Error: ", error);
-      res.status(400).json({
-        status: "fail",
-        message: error.message, // Send error message to the client
-      });
-    }
-  };
+exports.createUser = async (req, res) => {
+  try {
+    const newUser = await Users.create(req.body);
+    res.status(201).json({
+      status: "success",
+      data: {
+        user: newUser,
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    res.status(400).json({
+      status: "fail",
+      message: error.message,
+    });
+  }
+};
 
-exports.getUser = async (req,res)=>{
-  try{
+exports.getUser = async (req, res) => {
+  try {
     const user = await Users.findById(req.params.id);
     res.status(200).json({
       status: "success",
@@ -121,19 +114,19 @@ exports.getUser = async (req,res)=>{
         user,
       },
     });
-  }catch(error){
+  } catch (error) {
     res.status(400).json({
       status: "fail",
       message: error.message,
     });
   }
-}
+};
 
-exports.updateUser = async (req,res)=>{
-  try{
+exports.updateUser = async (req, res) => {
+  try {
     const filteredBody = filterObj(req.body, 'name', 'email');
-    if (req.file) filteredBody.photo = req.file.filename;
-    const updatedUser = await Users.findByIdAndUpdate(req.params.id, {...filteredBody, photo:req.file.location}, {
+    if (req.file) filteredBody.photo = req.file.location; // Use the S3 file location URL
+    const updatedUser = await Users.findByIdAndUpdate(req.params.id, filteredBody, {
       new: true,
       runValidators: true
     });
@@ -143,11 +136,10 @@ exports.updateUser = async (req,res)=>{
         user: updatedUser
       }
     });
-  }catch(error){
+  } catch (error) {
     res.status(400).json({
       status: "fail",
       message: error.message,
     });
   }
-}
-
+};
