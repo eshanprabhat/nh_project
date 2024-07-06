@@ -187,7 +187,7 @@ const Hero = ({
                   >
                     <Avatar
                       alt="avatar"
-                      src={user && user.photo ? require(`../images/users/${user.photo}`): avatardefault}
+                      src={user.photo ? user.photo : avatardefault} 
                       onClick={handleAccountClick}
                       onMouseEnter={handlePopoverOpen}
                       onMouseLeave={handlePopoverClose}

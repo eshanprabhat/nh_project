@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import Hero from "./Hero";
 import Footer from "../utils/Footer";
@@ -16,7 +16,7 @@ const Account = ({ setShowLogout, showLogout }) => {
   const fileInputRef = useRef(null);
   const [loginStatus, setLoginStatus] = useState(null);
   const [user, setUser] = useState(null);
-  const [myUser, setMyUser] = useState(null);
+  // const [myUser, setMyUser] = useState(null);
 
   useEffect(() => {
     const loginStatus = sessionStorage.getItem("loginStatus");
@@ -25,19 +25,6 @@ const Account = ({ setShowLogout, showLogout }) => {
     setUser(user);
   }, []);
 
-  useEffect(() => {
-    if (user && user._id) {
-      const fetchUser = async () => {
-        try {
-          const response = await axios.get(`https://nh-project.onrender.com/api/users/${user._id}`);
-          setMyUser(response.data.data.user);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      };
-      fetchUser();
-    }
-  }, [loginStatus, navigate, user]);
 
   const clickAccoutDetails = () => {
     navigate("/account-details");
@@ -74,6 +61,7 @@ const Account = ({ setShowLogout, showLogout }) => {
           console.log("File uploaded successfully:", data);
           sessionStorage.removeItem("user");
           sessionStorage.setItem("user", JSON.stringify(data.data.user));
+          window.location.reload();
         })
         .catch((error) => {
           console.error("Error uploading file:", error);
@@ -81,7 +69,7 @@ const Account = ({ setShowLogout, showLogout }) => {
     }
   };
 
-  if (!myUser) {
+  if (!user) {
     return <CircularProgress className="circular" />;
   }
 
@@ -93,13 +81,13 @@ const Account = ({ setShowLogout, showLogout }) => {
         setLoginStatus={setLoginStatus}
         showLogout={showLogout}
         setShowLogout={setShowLogout}
-        user={myUser}
+        user={user}
       />
       <div style={{ padding: "60px" }} />
       <div className="account-links">
         <img
           className="image-1"
-          src={myUser.photo ? myUser.photo : avatarphoto} // Display user's photo from AWS S3 or default avatar
+          src={user.photo ? user.photo : avatarphoto} // Display user's photo from AWS S3 or default avatar
           alt="avatar"
           onClick={handlePhotoClick}
         />

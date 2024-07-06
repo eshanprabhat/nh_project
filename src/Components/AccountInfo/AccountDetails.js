@@ -1,14 +1,13 @@
 import Hero from "../Hero";
-import axios from "axios";
 // import one from "../Images/user-member-avatar-face-profile-icon-vector-22965342.jpg";
 import moment from "moment";
-import { useNavigate} from "react-router-dom";
+import avatarphoto from "../Images/user-member-avatar-face-profile-icon-vector-22965342.jpg";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import Footer from "../../utils/Footer";
 const AccountDetails = () => {
-  const navigate = useNavigate();
-  const [myUser, setMyUser]=useState(null);
+
+  // const [myUser, setMyUser]=useState(null);
   const [loginStatus, setLoginStatus]=useState(null);
   const [user, setUser]=useState(null);
 useEffect(()=>{
@@ -17,27 +16,11 @@ useEffect(()=>{
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUser(user);
   },[])
-    useEffect(()=>{
-      if (user && user._id){
-      const fetchUser = async () => {
-        try {
-          const response = await axios.get(`https://nh-project.onrender.com/api/users/${user._id}`);
-          setMyUser(response.data.data.user);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      };
-      fetchUser();
-    }
-    },[loginStatus, navigate, user]);
     if (!user) {
       return <CircularProgress />;
     }
   console.log("AccountDetails:", user);
   let formattedDate = moment(user.date).format("MMMM Do YYYY, h:mm:ss a");
-  if (!myUser) {
-    return <CircularProgress />;
-  }
   return (
     <>
       <Hero
@@ -47,7 +30,7 @@ useEffect(()=>{
       />
       <div style={{padding:"60px"}} />
       <div className="container">
-        <img className="image-3" src={require(`../../images/users/${myUser.photo}`)} alt="Profile" />
+        <img className="image-3" src={user.photo ? user.photo : avatarphoto}  alt="Profile" />
         <div className="aser">
           <div className="asdf"><u>Personal Details:</u></div>
           <div style={{ padding: "5px" }}></div>
