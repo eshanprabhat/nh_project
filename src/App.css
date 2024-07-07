@@ -713,8 +713,14 @@ input:focus::placeholder {
   }
 }
 @media (max-width: 1000px) {
+  .hero-container{
+    height:85px;
+  }
   .buttons{
     display:none;
+  }
+  .hero-links{
+    display: none;
   }
 }
 

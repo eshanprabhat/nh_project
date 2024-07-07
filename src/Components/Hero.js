@@ -110,7 +110,7 @@ const Hero = ({
 
   return (
     <div>
-      <div className="d-flex align-items-center hero-container">
+      <div className="d-flex align-items-center justify-content-between hero-container">
         <div className="p-1">
           <img
             src={logo}
@@ -121,7 +121,7 @@ const Hero = ({
             onClick={handleLogoClick}
           />
         </div>
-        <div className="p-1 flex-grow-1">
+        <div className="p-1 flex-grow-1 hero-links">
           <div className="navbar-blocks" onClick={handleLogoClick}>
             Home
           </div>
@@ -236,6 +236,10 @@ const Hero = ({
             loginStatus={loginStatus}
             setLoginStatus={setLoginStatus}
             setShowLogout={setShowLogout}
+            plansRef={plansRef}
+            reviewsRef={reviewsRef}
+            faqsRef={faqsRef}
+            contactRef={contactRef}
           />
         </div>
       </div>
