@@ -88,7 +88,7 @@ const Home = () => {
               <FeatureCard
                 title="24/7 Support"
                 description="Our customer service team is available around the clock to assist you with any queries."
-                image="support.svg"
+                image="support.png"
               />
             </Grid>
           </Grid>

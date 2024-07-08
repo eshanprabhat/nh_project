@@ -19,14 +19,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
-.hero-text {
-  font-family: newsreader;
-  display:inline-block;
-  width: 50%;
-  height: 100%;
-  color: #345c81;
-  font-size: 40px;
-}
+
 .logo {
   cursor: pointer;
   display: inline-block;
@@ -592,14 +585,15 @@ input:focus::placeholder {
 .plan-title{
   position:absolute;
   display:inline-block;
-  font-family:cursive;
+  /* font-family:cursive; */
   font-size: 30px;
   text-shadow: 2px 2px 3px #ababab;
   margin:15px;
   margin-top: 20px;
 }
 .price{
-  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  /* font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+  font-weight: bold;
   font-size: 20px;
   color: #345c81;
   margin:15px;
@@ -609,7 +603,7 @@ input:focus::placeholder {
   left:115px;
 }
 .price-second{
-  font-family:Inter;
+  /* font-family:Inter; */
   position:absolute;
   top:345px;
   left:220px;
@@ -617,16 +611,16 @@ input:focus::placeholder {
 }
 .plan-description{
   margin-left:20px;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 15px;
+  /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+  font-size: 14px;
 }
 .plan-features{
   padding-top: 0px;
 }
 .plan-tagline{
-  margin-top:15px;
+  margin-top:8px;
   padding:0px 10px;
-  font-family: fantasy;
+  /* font-family: fantasy; */
   font-weight: bold;
   text-align: center;
 }
