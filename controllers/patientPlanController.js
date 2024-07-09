@@ -33,6 +33,7 @@ exports.getUserPatientPlans = async(req, res) => {
     const userId = req.params.userId;
     const patientPlans = await PatientPlans.find({
       user_id: userId,
+      Expiry_Date: { $gte: new Date() } 
     });
     res.status(200).json({
       status: "success",
@@ -44,7 +45,7 @@ exports.getUserPatientPlans = async(req, res) => {
     }catch(error){
       res.status(404).json({
         status:"fail",
-        message:error
+        message:error.message
       })
     }
   };

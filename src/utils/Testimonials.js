@@ -5,7 +5,7 @@ const Testimonial = ({ name, review }) => {
   return (
     <Card>
       <CardContent>
-        <Typography variant="h6" component="p">
+        <Typography variant="h7" component="p">
           "{review}"
         </Typography>
         <Typography variant="subtitle1" component="p" color="textSecondary">

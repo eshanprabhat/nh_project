@@ -821,10 +821,10 @@ input:focus::placeholder {
 }
 
 .tryr{ 
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
-  margin: 30px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin: 40px 30px 0px 40px;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
 }
 .patient-block{
   position: relative;
@@ -839,7 +839,6 @@ input:focus::placeholder {
   display: inline-block;
   position: absolute;
   left: 60%;
-  top: 25%;
   background-color: white;
   border: 1px solid #a4a4a4;
   width: 400px;

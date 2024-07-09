@@ -111,9 +111,9 @@ const PatientPlans = () => {
         user={user}
       />
       <div style={{padding:"42px"}} />
+          <div className="tryr">Select Policy Holders</div>
       <div className="patient-block">
         <div className="pat-ient">
-          <div className="tryr">Select Patients</div>
           <div className="patient-card-block">
             {resultsHTML}
             <Button

@@ -117,7 +117,7 @@ const AddPatient = () => {
         loginStatus={loginStatus}
         user={user}
       />
-      <div style={{padding:"42px"}} />
+      <div style={{padding:"52px"}} />
       <div className="add-patient">
         {alert && (<>
           <Alert variant="filled" severity={alert.severity}>
