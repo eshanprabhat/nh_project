@@ -1,5 +1,8 @@
 import React from 'react';
 import { Box, Container, Grid, Typography, Link } from '@mui/material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import XIcon from '@mui/icons-material/X';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const Footer = () => {
   return (
@@ -21,9 +24,9 @@ const Footer = () => {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6">Follow Us</Typography>
-            <Link href="#" color="inherit">Facebook</Link><br />
-            <Link href="#" color="inherit">Twitter</Link><br />
-            <Link href="#" color="inherit">LinkedIn</Link>
+            <Link href="#" color="inherit"><FacebookIcon /></Link><br />
+            <Link href="#" color="inherit"><XIcon /></Link><br />
+            <Link href="#" color="inherit"><LinkedInIcon /></Link>
           </Grid>
         </Grid>
       </Container>
