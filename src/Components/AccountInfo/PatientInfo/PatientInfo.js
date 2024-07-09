@@ -83,7 +83,7 @@ const PatientInfo = () => {
           </>
         ) : (
           <div style={{ margin: "auto 50%" }}>
-            <CircularProgress />
+            <CircularProgress className="circular"/>
           </div>
         )}
       </div>
