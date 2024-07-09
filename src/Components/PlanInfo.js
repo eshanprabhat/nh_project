@@ -5,6 +5,7 @@ import PlanCard2 from "./PlanCard2";
 import tick from "./Images/3550119.png";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Footer from "../utils/Footer";
 
 const PlanInfo = () => {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const PlanInfo = () => {
         </div>
       </div>
       <div className="info-sec">{combinedFeaturesHTML}</div>
+      <Footer />
     </>
   );
 };

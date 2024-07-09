@@ -829,7 +829,8 @@ input:focus::placeholder {
 .patient-block{
   position: relative;
   padding: 20px; /* Added padding for mobile */
-  margin-left:70px
+  margin-left:70px;
+  padding-bottom: 150px;
 }
 .pat-ient{
   display: inline-block;

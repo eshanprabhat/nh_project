@@ -9,6 +9,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import displayRazorPay from "../utils/PaymentGateway";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Footer from "../utils/Footer";
 
 const PatientPlans = () => {
   const navigate = useNavigate();
@@ -182,6 +183,7 @@ const PatientPlans = () => {
             You are Logged In Successfully!!
           </Alert>
         </Snackbar>
+        <Footer />
       </div>
     </>
   );
