@@ -43,6 +43,12 @@ const Hero = ({
   const open = Boolean(anchorEl);
   const handleAboutClick = () => {
     navigate("/about");
+    setTimeout(() => {
+      const element = document.getElementById("top");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
   };
   const handleAccountClick = () => {
     navigate("/account-info");

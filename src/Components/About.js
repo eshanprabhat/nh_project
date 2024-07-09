@@ -27,7 +27,7 @@ const About = () => {
         loginStatus={loginStatus}
         user={user}
       />
-      <div style={{padding:"40px"}} />
+      <div style={{padding:"40px"}} id="top"/>
       <Container>
         <Box py={5}>
           <Typography variant="h4" component="h2" gutterBottom>
