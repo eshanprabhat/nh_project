@@ -10,9 +10,15 @@ const PlanCard = ({ plan }) => {
   }else{
     featuresHTML="No Features found!!"
   }
-  const planClick = ()=>{
+  const planClick = () => {
     navigate("/plan-info",{state:{plan}});
-  }
+    setTimeout(() => {
+      const element = document.getElementById("top");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  };
 
   return (
     <>

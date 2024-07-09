@@ -40,7 +40,7 @@ const PlanInfo = () => {
   return (
     <>
       <Hero text={"Plan Information"} loginStatus={loginStatus} user={user} />
-      <div style={{padding:"42px"}} />
+      <div style={{padding:"42px"}} id="top" />
       <div className="des-pl">{plan.description}</div>
       <div className="p-btn-container">
         <PlanCard2 plan={plan} />

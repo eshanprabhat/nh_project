@@ -11,6 +11,7 @@ import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase";
 import axios from "axios";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import Alert from '@mui/material/Alert';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Login = () => {
   const [users, setUsers] = useState([]);
   const [otp, setOTP] = useState("");
   const [showOTP, setShowOTP] = useState(false);
+  const [alertPno, setAlertPno] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState(null);
   const location = useLocation();
   const { plan } = location.state || {};
@@ -71,7 +73,8 @@ const Login = () => {
     return new Promise((resolve) => {
       if (!user) {
         console.log("User not Verified!");
-        alert("User Not Registered! Try a different number or Sign Up");
+        // alert("User Not Registered! Try a different number or Sign Up");
+        setAlertPno(true);
         resolve(false); // Set allowSignIn to false and resolve promise
       } else {
         console.log("User Verified!");
@@ -128,6 +131,7 @@ const Login = () => {
   return (
     <div className="page">
       <div className="first">
+        {alertPno?<Alert style={{margin:"40px", "margin-top":"100px"}} variant="filled" severity="error">User Not Registered! Try a different number or Sign Up</Alert>:<></>}
         <div className="login-details">
           <img className="filtered" src={logo} alt="logo" />
           <div id="sign-in-button"></div>
