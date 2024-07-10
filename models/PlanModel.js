@@ -8,6 +8,10 @@ const planSchema = new mongoose.Schema({
     type:Number,
     required: true,
   },
+  coverage:{
+    type:Number,
+    required: true
+  },
   tagline: {
     type: String,
     required: true,

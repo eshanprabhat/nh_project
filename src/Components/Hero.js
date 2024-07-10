@@ -135,7 +135,7 @@ const Hero = ({
             Plans
           </div>
           <div className="navbar-blocks" onClick={handleReviewsClick}>
-            Reviews
+            Testimonials
           </div>
           <div className="navbar-blocks" onClick={handleFAQsClick}>
             FAQs

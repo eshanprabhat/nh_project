@@ -4,7 +4,7 @@ import { Card, CardContent, Typography} from '@mui/material';
 const FeatureCard = ({ title, description, image }) => {
   return (
     <Card>
-        <img style={{paddingLeft:"30%", filter:"saturate(0)"}} src={require(`../Components/Images/${image}`)} alt={title} height="140" />
+        {/* <img style={{paddingLeft:"30%", filter:"saturate(0)"}} src={require(`../Components/Images/${image}`)} alt={title} height="140" /> */}
       {/* <CardMedia component="img" height="140" image={require(`../Components/Images/${image}`)} alt={title} /> */}
       <CardContent>
         <Typography variant="h5" component="div">

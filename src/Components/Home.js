@@ -56,6 +56,14 @@ const Home = () => {
   } else {
     plansHtml = <CircularProgress />;
   }
+  const planClick = () => {
+      setTimeout(() => {
+        const element = document.getElementById("plans");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100); // Timeout to allow the page to load first
+  };
 
   return (
     <>
@@ -64,7 +72,9 @@ const Home = () => {
       <div className="hero-section">
         <div className="lkjh">
       <div className="h-title">Get the Best Health Insurance Plans</div>
-        <div className="h-info">Protect yourself and your loved ones with our comprehensive health insurance plans. Choose from a variety of options tailored to meet your specific needs.</div>
+        <div className="h-info">Get 100% hospital bill payment & tax deductions up to ₹75,000.</div>
+        <div style={{padding:"20px"}} />
+        <div className="plan-button" onClick={planClick}>Check Plans</div>
         </div>
       </div>
       <Container>
@@ -97,9 +107,11 @@ const Home = () => {
       <div style={{padding:"20px"}} id="plans" ref={plansRef} />
       <Container>
         <Box py={5}>
-          <Typography variant="h4" component="h2" gutterBottom>
-            Our Plans
-          </Typography>
+          <div className="htyu">
+            <div className="ytry">Choose the perfect plan for you</div>
+            <div className="hgtr">Our Plans</div>
+            <div className="ytry">Explore the Best  Health Insurance Options</div>
+            </div>
           <div className="plan-container">{plansHtml}</div>
         </Box>
       </Container>

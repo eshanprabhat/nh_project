@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import second from "./Images/Firefly Health Insurance 82230.jpg";
 import one from "./Images/Screenshot 2024-05-30 at 3.27.15 PM.png";
 import two from "./Images/download.png";
@@ -11,7 +11,7 @@ import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase";
 import axios from "axios";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -25,7 +25,9 @@ const Login = () => {
   const { plan } = location.state || {};
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await axios.get("https://nh-project.onrender.com/api/users");
+      const response = await axios.get(
+        "https://nh-project.onrender.com/api/users"
+      );
       setUsers(response.data.data.users);
     };
     fetchUsers();
@@ -51,34 +53,27 @@ const Login = () => {
     const formattedPhoneNumber = `+${phoneNumber}`;
     console.log(`Formatted Phone Number: ${formattedPhoneNumber}`);
     const appVerifier = window.recaptchaVerifier;
-
-    // const auth = getAuth();
     signInWithPhoneNumber(auth, formattedPhoneNumber, appVerifier)
       .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
         setConfirmationResult(confirmationResult);
         console.log("SMS sent Successfully!!");
-        // ...
       })
       .catch((error) => {
         console.log("SMS Not sent", error);
-        // Error; SMS not sent
-        // ...
-      });
-  };
+      })
+  }
+
   const handlePhoneNumberVerification = (phoneNumber) => {
     const user = users.find((el) => el.phoneNumber === phoneNumber);
     return new Promise((resolve) => {
       if (!user) {
         console.log("User not Verified!");
-        // alert("User Not Registered! Try a different number or Sign Up");
         setAlertPno(true);
-        resolve(false); // Set allowSignIn to false and resolve promise
+        resolve(false);
       } else {
         console.log("User Verified!");
-        resolve(true); // Set allowSignIn to true and resolve promise
+        resolve(true);
       }
     });
   };
@@ -86,7 +81,7 @@ const Login = () => {
     e.preventDefault();
     const formatted = `+${phoneNumber}`;
     console.log(formatted);
-    const isVerified = await handlePhoneNumberVerification(formatted); // Wait for verification to complete
+    const isVerified = await handlePhoneNumberVerification(formatted); 
     if (isVerified) {
       setupRecaptcha();
       setShowOTP(true);
@@ -97,13 +92,12 @@ const Login = () => {
   const handleOtpChange = (value) => {
     setOTP(value);
   };
-  const getUser = (phoneNumber) => {;
+  const getUser = (phoneNumber) => {
     const user = users.find((el) => el.phoneNumber === phoneNumber);
     return user;
   };
   const formatted = `+${phoneNumber}`;
   const myUser = getUser(formatted);
-
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
@@ -116,9 +110,9 @@ const Login = () => {
           sessionStorage.setItem("showSnackbar", "true");
           sessionStorage.setItem("loginStatus", "true");
           sessionStorage.setItem("user", JSON.stringify(myUser));
-          if(plan){
-            navigate("/plan-patient",{state:{plan}});
-          }else{
+          if (plan) {
+            navigate("/plan-patient", { state: { plan } });
+          } else {
             navigate("/");
           }
         })
@@ -131,7 +125,17 @@ const Login = () => {
   return (
     <div className="page">
       <div className="first">
-        {alertPno?<Alert style={{margin:"40px", "margin-top":"100px"}} variant="filled" severity="error">User Not Registered! Try a different number or Sign Up</Alert>:<></>}
+        {alertPno ? (
+          <Alert
+            style={{ margin: "40px", "margin-top": "100px" }}
+            variant="filled"
+            severity="error"
+          >
+            User Not Registered! Try a different number or Sign Up
+          </Alert>
+        ) : (
+          <></>
+        )}
         <div className="login-details">
           <img className="filtered" src={logo} alt="logo" />
           <div id="sign-in-button"></div>
