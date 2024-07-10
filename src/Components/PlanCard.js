@@ -48,8 +48,8 @@ const PlanCard = ({ plan }) => {
           </ul>
         </div>
         <div className="plan-description">
-          <b>Coverage: Rs. </b>
-          {formatIndianCurrency(plan.coverage)} /-
+          <b>Coverage: </b>
+          Rs. {formatIndianCurrency(plan.coverage)} /-
         </div>
         <div className="plan-description">
           <b>Duration: </b>
