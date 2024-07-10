@@ -1075,8 +1075,8 @@ footer {
 }
 .plan-button{
   display: inline-block;
-  background-color: #87000e;
-  border:1px solid #4e0000;
+  background-color: #008738;
+  border:1px solid #004e2c;
   padding: 10px 55px;
   font-size: 18px;
   font-weight: 600;
@@ -1087,10 +1087,10 @@ footer {
 }
 .plan-button:hover{
   transform: scale(1.05);
-  background-color: #68000a;
+  background-color: #00681a;
 }
 .plan-button:active{
-  background-color: #4e0008;
+  background-color: #004e2b;
 }
 .htyu{
   display:flex;
