@@ -1,71 +1,87 @@
-# Getting Started with Create React App
+# Health Insurance Plans Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+This is a full stack MERN project developed during my internship, focused on displaying various health insurance plans. The application includes features such as user authentication, plan browsing, and detailed plan information.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- User Authentication (Sign Up, Login, Logout)
+- Browse Health Insurance Plans
+- View Plan Details
+- Responsive Navigation
+- Secure and scalable backend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To get a local copy up and running, follow these steps:
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js
+- MongoDB
+- npm or yarn
 
-### `npm run build`
+### Backend Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository
+    ```sh
+    git clone https://github.com/eshanprabhat/nh_project.git
+    ```
+2. Install dependencies
+    ```sh
+    npm install
+    ```
+3. Create a `.env` file in the backend directory and add the following environment variables:
+    ```env
+    NODE_ENV=development
+    PORT=8000
+    USERNAME=your Username
+    DATABASE_PASSWORD=Your Database Password
+    DATABASE=Your Database String
+    RAZORPAY_KEY_ID=Your Razorpay Key Id
+    RAZORPAY_KEY_SECRET=Your Razorpay key secret
+    AWS_BUCKET_NAME=Your AWS Bucket Name
+    AWS_BUCKET_REGION=AWS region
+    AWS_ACCESS_KEY=AWS Access key
+    AWS_ACCESS_SECRET=AWS Access Secret
+    ```
+4. Start the backend server
+    ```sh
+    npm run server
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Frontend Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Install dependencies
+    ```sh
+    npm install
+    ```
+1. Start the frontend development server
+    ```sh
+    npm start
+    ```
 
-### `npm run eject`
+## Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Once both servers are running, you can access the application at `http://localhost:3000`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Sign up for a new account or log in with existing credentials.
+- Browse through the available health insurance plans.
+- Click on any plan to view detailed information.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Technologies Used
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Frontend:** React, Material UI, Bootstrap
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Authentication:** Firebase
+- **Version Control:** Git, GitHub
 
-## Learn More
+## Contributors
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [Eshan Prabhat](https://github.com/eshanprabhat)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# nh_project
+Distributed under the MIT License. See `LICENSE` for more information.
