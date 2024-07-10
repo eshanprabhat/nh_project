@@ -1,4 +1,15 @@
 import poster from "./Images/download2.png";
+const formatIndianCurrency = (amount) => {
+  const x = amount.toString().split('.');
+  let lastThree = x[0].substring(x[0].length - 3);
+  const otherNumbers = x[0].substring(0, x[0].length - 3);
+  if (otherNumbers !== '') {
+    lastThree = ',' + lastThree;
+  }
+  const result = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + lastThree;
+  return x.length > 1 ? result + '.' + x[1] : result;
+};
+
 
 const PlanCard = ({ plan }) => {
 
@@ -26,8 +37,8 @@ const PlanCard = ({ plan }) => {
           </ul>
         </div>
         <div className="plan-description">
-          <b>Created On: </b>
-          {plan.created_on}
+          <b>Coverage: Rs. </b>
+          {formatIndianCurrency(plan.coverage)} /-
         </div>
         <div className="plan-description">
           <b>Duration: </b>
