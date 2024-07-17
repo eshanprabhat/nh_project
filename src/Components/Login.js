@@ -3,7 +3,7 @@ import second from "./Images/Firefly Health Insurance 82230.jpg";
 import one from "./Images/Screenshot 2024-05-30 at 3.27.15 PM.png";
 import two from "./Images/download.png";
 import three from "./Images/Firefly Health Insurance 65632.jpg";
-import logo from "./Images/Narayana_Health_Logo.jpg";
+import logo from "./Images/logo.png";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import OtpInput from "otp-input-react";
@@ -137,7 +137,7 @@ const Login = () => {
           <></>
         )}
         <div className="login-details">
-          <img className="filtered" src={logo} alt="logo" />
+          <img className="filtered" src={logo} alt="logo" height={180} width={360}/>
           <div id="sign-in-button"></div>
           {showOTP ? (
             <>

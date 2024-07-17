@@ -1,4 +1,4 @@
-import logo from "./Images/Narayana_Health_Logo.png";
+import logo from "./Images/logo2.webp";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -122,7 +122,7 @@ const Hero = ({
             src={logo}
             alt="logo"
             height={45}
-            width={45}
+            width={95}
             style={{ cursor: "pointer" }}
             onClick={handleLogoClick}
           />
